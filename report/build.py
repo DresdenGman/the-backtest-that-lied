@@ -78,14 +78,17 @@ def generate(e):
     print(f'✅ {len(macros)} macros generated')
 
     # Table fragments — signed percentages from evidence
+    def ratio(k): return f'{m[k]["value"]:+.2f}'
+    def pct1(k): return f'{m[k]["value"]*100:.1f}\\%'
+
     tables = {
-        'portfolio_results.tex': f"""\\toprule
-\\textbf{{Portfolio}} & \\textbf{{Net Annual}} & \\textbf{{Sharpe}} & \\textbf{{Max DD}} & \\textbf{{Excess}} \\\\
-\\midrule
-U100 RAW (base31) & {fmt(m['u100_raw_net_annual'])} & 0.31 & 46.3\\% & {fmt(m['u100_raw_net_annual'])} \\\\
-U50 RESID (base31) & {fmt(m['u50_resid_net_annual'])} & -0.04 & {fmt(m['u50_max_drawdown'])} & +4.9\\% \\\\
-U50 EW benchmark & {fmt(m['u50_ew_bench_annual'])} & -0.26 & --- & --- \\\\
-\\bottomrule""",
+        'portfolio_results.tex': f"""\\\\toprule
+\\\\textbf{{Portfolio}} & \\\\textbf{{Net Annual}} & \\\\textbf{{Sharpe}} & \\\\textbf{{Max DD}} & \\\\textbf{{Excess}} \\\\\\\\
+\\\\midrule
+U100 RAW (base31) & {fmt(m['u100_raw_net_annual'])} & {ratio('u100_raw_sharpe')} & {pct1('u100_raw_max_dd')} & {fmt(m['u100_raw_excess_annual'])} \\\\\\\\
+U50 RESID (base31) & {fmt(m['u50_resid_net_annual'])} & {ratio('u50_resid_sharpe')} & {fmt(m['u50_max_drawdown'])} & {fmt(m['u50_resid_excess_annual'])} \\\\\\\\
+U50 EW benchmark & {fmt(m['u50_ew_bench_annual'])} & {ratio('u50_ew_sharpe')} & --- & --- \\\\\\\\
+\\\\bottomrule""",
 
         'decision_gates.tex': f"""\\toprule
 \\textbf{{Criterion}} & \\textbf{{Result}} & \\textbf{{Gate}} \\\\

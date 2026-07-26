@@ -1,23 +1,15 @@
 \section{Evidence Map}
-Table~\ref{tab:evidence} maps key evidence metrics to their experiment IDs and artifact paths.
 
-\begin{table}[htbp]
-\centering
-\caption{Selected evidence metrics with provenance.}
-\label{tab:evidence}
-\begin{tabularx}{\textwidth}{lXX}
-\toprule
-\textbf{Metric} & \textbf{Experiment ID} & \textbf{Artifact} \\
-\midrule
-\toprule
-\textbf{Metric} & \textbf{Experiment ID} & \textbf{Artifact} \\
-\midrule
-target\_leak\_before\_ic & EXP\_TARGET\_SHIFT\_01 & results/target\_shift\_audit.csv \\
-frozen\_baseline\_mean\_ic & EXP\_BASELINE\_V43 & results/baseline\_v43\_summary.csv \\
-u100\_raw\_net\_annual & EXP\_DP1\_PORTFOLIO & results/dp1\_portfolio\_summary.csv \\
-u50\_resid\_net\_annual & EXP\_STEP5\_ABLATION & results/step5\_comparison.csv \\
-q1\_within\_excess & EXP\_DP1A\_QUINTILE & results/dp1a\_quintile.csv \\
-h3\_u50\_net\_annual & EXP\_MH1R\_HORIZON & results/mh1r.csv \\
-\bottomrule
-\end{tabularx}
-\end{table}
+Key evidence metrics with experiment IDs and artifact paths:
+
+\begin{itemize}
+    \item \texttt{target\_leak\_before\_ic} $\rightarrow$ EXP\_TARGET\_SHIFT\_01 $\rightarrow$ \texttt{results/target\_shift\_audit.csv}
+    \item \texttt{frozen\_baseline\_mean\_ic} $\rightarrow$ EXP\_BASELINE\_V43 $\rightarrow$ \texttt{results/baseline\_v43\_summary.csv}
+    \item \texttt{u100\_raw\_net\_annual} $\rightarrow$ EXP\_DP1\_PORTFOLIO $\rightarrow$ \texttt{results/dp1\_portfolio\_summary.csv}
+    \item \texttt{u50\_resid\_net\_annual} $\rightarrow$ EXP\_STEP5\_ABLATION $\rightarrow$ \texttt{results/step5\_comparison.csv}
+    \item \texttt{q1\_within\_excess} $\rightarrow$ EXP\_DP1A\_QUINTILE $\rightarrow$ \texttt{results/dp1a\_quintile.csv}
+    \item \texttt{iid\_null\_mean\_ic} $\rightarrow$ EXP\_NULL\_IID\_01 $\rightarrow$ \texttt{results/stage1\_null\_results.csv}
+    \item \texttt{h3\_u50\_net\_annual} $\rightarrow$ EXP\_MH1R\_HORIZON $\rightarrow$ \texttt{results/mh1r.csv}
+\end{itemize}
+
+\noindent All metrics are validated by \texttt{scripts/validate\_evidence.py} and \texttt{tests/test\_evidence.py}.

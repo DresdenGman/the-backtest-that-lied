@@ -1,27 +1,14 @@
 \section{Experiment Ledger}
 
-\toprule
-\textbf{Experiment} & \textbf{Key Metric} & \textbf{Status} \\
-\midrule
-Target Timing & IC \InitialIC $\to$ \CorrectedIC & Invalid $\to$ Validated \\
-Cross-Fit Audit & IC 0.76 $\to$ 0.12 & Invalid $\to$ Validated \\
-Frozen Baseline & Mean IC \BaselineIC, NW $t$ \NeweyWestT & Validated \\
-U100 Portfolio & Net +\UFullNet & Q1-driven \\
-U50 RESID & Net $-\ULiquidLoss$, DD \MaxDrawdownPct & Failed \\
-Q1 Selection & +\QOneExcessPct{} monthly & Validated \\
-H3/H6 Horizon & Both negative U50 & Rejected \\
-\bottomrule
+Chronological research milestones:
 
-\subsection{Chronological Sequence}
-The experimental phases proceeded as follows:
-
-\begin{enumerate}[label=\textbf{Phase \arabic*:},leftmargin=*]
-    \item \textbf{Naive pipeline (V1):} 20 factors + LightGBM with contemporaneous target. IC = \InitialIC. \invalid{Rejected---target leakage detected.}
-    \item \textbf{Leak detection (V2):} Date-shift scan, cross-fitting audit, survivorship correction. IC corrected to \CorrectedIC. \valid{Validated---clean pipeline established.}
-    \item \textbf{Frozen baseline (V3):} PIT universe, rank normalization, 20-seed ensemble, 3-fold walk-forward. Mean OOS IC = \BaselineIC, NW $t$ = \NeweyWestT. \valid{Validated.}
-    \item \textbf{Null infrastructure:} iid null, constant-label test, permutation audit. All passed. \valid{Validated.}
-    \item \textbf{Portfolio diagnostics (DP-1/DP-1A):} Executable portfolio simulation, cost scenarios, quintile decomposition. U100 positive; U50 negative; Q1 dominant. \warn{Observed---signal concentrated in low liquidity.}
-    \item \textbf{Residual ablation (Step 5):} RAW vs.\ RESID comparison. RESID improved U50 marginally but not sufficiently. \invalid{Rejected---failed profitability gate.}
-    \item \textbf{Multi-horizon (MH-1R):} 3-month and 6-month targets. Both produced negative U50 returns. \invalid{Rejected---failed scalability gate.}
-    \item \textbf{Termination:} OHLCV-only core strategy closed. Q1 preserved as frozen research sleeve. \valid{Decision recorded.}
+\begin{enumerate}
+    \item \textbf{Target Timing Audit} (EXP\_TARGET\_SHIFT\_01): Discovered contemporaneous target leakage. IC \InitialIC{} $\to$ \CorrectedIC. \invalid{Invalid.}
+    \item \textbf{Cross-Fit Audit} (EXP\_CROSSFIT\_01): Own-stock factor contamination detected. IC 0.76 $\to$ 0.12. \invalid{Invalid.}
+    \item \textbf{Frozen Baseline} (EXP\_BASELINE\_V43): Clean pipeline, PIT universe, rank normalization. Mean OOS IC \BaselineIC, NW $t = \NeweyWestT$. \valid{Validated.}
+    \item \textbf{Null Infrastructure} (EXP\_NULL\_IID\_01, EXP\_NULL\_PERM\_01): iid null IC $\approx$ 0, permutation audit correlation $\approx$ 0. \valid{Validated.}
+    \item \textbf{Portfolio Diagnostics} (EXP\_DP1\_PORTFOLIO, EXP\_DP1A\_QUINTILE): U100 +\UFullNet, U50 $-\ULiquidLoss$, Q1 holds \QOneHoldingsPct. \warn{Observed---Q1-driven.}
+    \item \textbf{Residual Ablation} (EXP\_STEP5\_ABLATION): RESID improves U50 $\sim$1.2pp but cannot reach profitability. \invalid{Rejected.}
+    \item \textbf{Multi-Horizon} (EXP\_MH1R\_HORIZON): H3 $-\HorizonThreeLoss$, H6 $-\HorizonSixLoss$ U50 net. \invalid{Rejected.}
+    \item \textbf{Final Decision}: OHLCV-only core strategy terminated. Q1 preserved as frozen research sleeve. \valid{Recorded.}
 \end{enumerate}

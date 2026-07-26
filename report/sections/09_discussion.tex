@@ -1,7 +1,5 @@
 \section{The Signal Was Real. The Strategy Was Not.}
 
-The central finding is the distinction between \textit{what can be predicted} and \textit{what can be traded}.
-
 \begin{table}[htbp]
 \centering
 \caption{Decision gates and outcomes.}
@@ -10,22 +8,22 @@ The central finding is the distinction between \textit{what can be predicted} an
 \toprule
 \textbf{Criterion} & \textbf{Result} & \textbf{Gate} \\
 \midrule
-Predictive ranking & Passed & IC $> 0$, NW $t > 2$ \\
-Time-aware significance & Passed & Bootstrap CI excludes 0 \\
-Within-Q1 selection & Passed & Excess $> 0$ \\
-Positive U50 return & Failed & Net $< 0$ \\
-Acceptable drawdown & Failed & DD $> 25\%$ \\
-Scalable capacity & Failed & Q1 holds +48.1 \\
+Predictive ranking & \valid{Passed} & IC $> 0$, NW $t > 2$ \\
+Time-aware significance & \valid{Passed} & Bootstrap CI excludes 0 \\
+Within-Q1 selection & \valid{Passed} & Excess $> 0$ \\
+Positive U50 return & \invalid{Failed} & Net $< 0$ \\
+Acceptable drawdown & \invalid{Failed} & DD $> 25\%$ \\
+Scalable capacity & \invalid{Failed} & Q1 holds +48.1 \\
 \midrule
 \textbf{Decision} & \textbf{TERMINATED} & OHLCV branch closed \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The frozen baseline retained a mean out-of-sample IC of 0.108 with Newey--West $t = 10.5$ and a block-bootstrap 95\% confidence interval lower bound of 0.087.
+The frozen baseline retained a mean out-of-sample IC of 0.108 with Newey--West $t = 10.5$.
 
 \subsection{Prediction vs.\ Decision}
-Cross-sectional return prediction---even statistically robust prediction---is not the same as portfolio construction. In this project, each step revealed a new constraint: statistical significance survived all corrections; execution introduced timing gaps; costs consumed 4+ percentage points of annual return; liquidity concentrated the signal in stocks too small to trade at scale; and drawdown remained above threshold.
+Each implementation step revealed constraints: statistical significance survived corrections; execution introduced timing gaps; costs consumed 4+ p.p. of annual return; liquidity concentrated the signal in stocks where capacity was severely constrained; drawdown remained above threshold.
 
 \subsection{The Discipline of Stopping}
-The pre-registered decision gates were designed specifically to prevent post-hoc optimization. When all rescue attempts failed the same gates, the only honest decision was termination. This is not a failure of the research program---it is the program's primary output.
+The pre-registered decision gates prevented post-hoc optimization. When all rescue attempts failed the same gates, termination was the only honest decision.

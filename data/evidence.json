@@ -39,7 +39,7 @@
       "unit": "monthly IC",
       "experiment_id": "EXP_CROSSFIT_01",
       "artifact": "results/crossfit_audit.csv",
-      "status": "validated — cross-fitted factor construction"
+      "status": "validated"
     },
     "frozen_baseline_mean_ic": {
       "value": 0.108,
@@ -140,6 +140,48 @@
       "experiment_id": "EXP_MH1R_HORIZON",
       "artifact": "results/mh1r.csv",
       "status": "rejected — longer horizon did not improve liquid performance"
+    },
+    "u100_raw_sharpe": {
+      "value": 0.31,
+      "unit": "Sharpe ratio",
+      "experiment_id": "EXP_DP1_PORTFOLIO",
+      "artifact": "results/dp1_portfolio_summary.csv",
+      "status": "observed"
+    },
+    "u100_raw_max_dd": {
+      "value": 0.463,
+      "unit": "max drawdown",
+      "experiment_id": "EXP_DP1_PORTFOLIO",
+      "artifact": "results/dp1_portfolio_summary.csv",
+      "status": "observed"
+    },
+    "u100_raw_excess_annual": {
+      "value": 0.0686,
+      "unit": "annual excess return",
+      "experiment_id": "EXP_DP1_PORTFOLIO",
+      "artifact": "results/dp1_portfolio_summary.csv",
+      "status": "observed"
+    },
+    "u50_resid_sharpe": {
+      "value": -0.04,
+      "unit": "Sharpe ratio",
+      "experiment_id": "EXP_STEP5_ABLATION",
+      "artifact": "results/step5_comparison.csv",
+      "status": "failed"
+    },
+    "u50_resid_excess_annual": {
+      "value": 0.049,
+      "unit": "annual excess return",
+      "experiment_id": "EXP_STEP5_ABLATION",
+      "artifact": "results/step5_comparison.csv",
+      "status": "observed"
+    },
+    "u50_ew_sharpe": {
+      "value": -0.26,
+      "unit": "Sharpe ratio",
+      "experiment_id": "EXP_DP1_PORTFOLIO",
+      "artifact": "results/dp1_portfolio_summary.csv",
+      "status": "benchmark"
     }
   },
   "collapses": [

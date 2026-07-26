@@ -104,7 +104,7 @@ Scalable capacity & Failed & Q1 holds {fmt(m['q1_share_of_u100_holdings'])} \\\\
 \\textbf{{Experiment}} & \\textbf{{Key Metric}} & \\textbf{{Status}} \\\\
 \\midrule
 Target Timing & IC {fmt(m['target_leak_before_ic'])} $\\to$ {fmt(m['target_leak_after_ic'])} & Invalid $\\to$ Validated \\\\
-Cross-Fit Audit & IC 0.76 $\\to$ 0.12 & Invalid $\\to$ Validated \\\\
+Cross-Fit Audit & IC {fmt(m['crossfit_ic_before'])} $\\to$ {fmt(m['crossfit_ic_after'])} & Invalid $\\to$ Validated \\\\
 Frozen Baseline & Mean IC {fmt(m['frozen_baseline_mean_ic'])}, NW $t$ {fmt(m['frozen_baseline_nw_t6'])} & Validated \\\\
 U100 Portfolio & Net {fmt(m['u100_raw_net_annual'])} & Q1-driven \\\\
 U50 RESID & Net {fmt(m['u50_resid_net_annual'])}, DD {fmt(m['u50_max_drawdown'])} & Failed \\\\

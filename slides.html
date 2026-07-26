@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Backtest That Lied — Admissions Portfolio Deck</title>
+<style>
+  :root { --bg:#0d1117; --card:#161b22; --border:#30363d; --text:#c9d1d9; --muted:#8b949e; --accent:#58a6ff; --green:#3fb950; --red:#f85149; --amber:#d29922; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  .slide { width:100vw; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:3rem 2rem; page-break-after:always; }
+  .slide.hero { background:linear-gradient(180deg, #0d1117 0%, #161b22 100%); }
+  .slide.dark-accent { background:var(--card); }
+  h1 { font-size:3rem; font-weight:800; text-align:center; margin-bottom:1rem; }
+  h1.small { font-size:2.2rem; }
+  h2 { font-size:1.6rem; color:var(--accent); margin-bottom:1.5rem; text-align:center; }
+  h3 { font-size:1.2rem; color:var(--muted); margin:1rem 0 0.5rem; }
+  .subtitle { font-size:1.1rem; color:var(--muted); text-align:center; margin-bottom:2rem; max-width:600px; }
+  .big-num { font-family:'SF Mono',monospace; font-size:3rem; font-weight:900; }
+  .big-num.green { color:var(--green); }
+  .big-num.red { color:var(--red); }
+  .arrow { font-size:2rem; color:var(--red); margin:0 0.5rem; }
+  .stats { display:flex; gap:3rem; margin:1.5rem 0; flex-wrap:wrap; justify-content:center; }
+  .stat { text-align:center; }
+  .stat .val { font-family:'SF Mono',monospace; font-size:2rem; font-weight:700; }
+  .stat .label { font-size:0.8rem; color:var(--muted); margin-top:0.3rem; }
+  .stat .val.pass { color:var(--green); }
+  .stat .val.fail { color:var(--red); }
+  .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; max-width:900px; width:100%; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1.2rem; }
+  .card h3 { font-size:1rem; color:var(--amber); margin-top:0; }
+  .card p { font-size:0.85rem; color:var(--muted); }
+  .verdict-row { display:flex; align-items:center; gap:0.5rem; margin:0.4rem 0; font-size:1rem; }
+  .verdict-row .icon { font-size:1.2rem; }
+  .verdict-row .icon.pass { color:var(--green); }
+  .verdict-row .icon.fail { color:var(--red); }
+  .leak-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; max-width:800px; }
+  .leak-item { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:0.8rem; font-size:0.85rem; }
+  .leak-item .leak-title { color:var(--amber); font-weight:600; margin-bottom:0.3rem; }
+  .leak-item .leak-before { color:var(--red); }
+  .leak-item .leak-after { color:var(--green); }
+  .timeline-h { display:flex; gap:0; max-width:850px; overflow-x:auto; }
+  .tl-node { flex:1; min-width:100px; text-align:center; padding:0.5rem; border-top:3px solid var(--border); position:relative; }
+  .tl-node::before { content:''; width:10px; height:10px; background:var(--accent); border-radius:50%; position:absolute; top:-6px; left:50%; transform:translateX(-50%); }
+  .tl-node.kill::before { background:var(--red); }
+  .tl-node .tl-stage { font-size:0.8rem; color:var(--accent); font-weight:600; }
+  .tl-node .tl-desc { font-size:0.7rem; color:var(--muted); margin-top:0.3rem; }
+  .quote { font-size:1.3rem; font-style:italic; text-align:center; max-width:600px; color:var(--accent); margin:1.5rem 0; }
+  .quote .attrib { font-size:0.9rem; color:var(--muted); font-style:normal; margin-top:1rem; }
+  ul { text-align:left; max-width:600px; margin:0 auto; line-height:1.8; font-size:1rem; }
+  ul li { margin:0.3rem 0; }
+  .slide-num { position:absolute; bottom:1rem; right:1.5rem; font-size:0.75rem; color:var(--muted); }
+  @media print { .slide { min-height:100vh; page-break-after:always; padding:2rem; } }
+  @media(max-width:600px) {
+    h1 { font-size:1.8rem; } .big-num { font-size:2rem; } .grid-3 { grid-template-columns:1fr; }
+    .stats { gap:1rem; } .leak-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide hero">
+  <h1>The Backtest That Lied</h1>
+  <p class="subtitle">How I built, broke, and rejected an A-share machine-learning strategy — and what I learned by killing my own best result.</p>
+  <div class="stats">
+    <div class="stat"><div class="val fail">200+</div><div class="label">Model fits</div></div>
+    <div class="stat"><div class="val fail">6</div><div class="label">Experimental phases</div></div>
+    <div class="stat"><div class="val pass">1</div><div class="label">Honest decision</div></div>
+  </div>
+  <div class="slide-num">1/12</div>
+</div>
+
+<!-- Slide 2: The hook -->
+<div class="slide">
+  <h2>The Result That Fooled Me</h2>
+  <div class="stats">
+    <span class="big-num green">IC 0.94</span>
+    <span class="arrow">→</span>
+    <span class="big-num red">IC 0.10</span>
+  </div>
+  <p class="subtitle" style="margin-top:1rem;">96 of 96 months positive. Probability by chance: 10⁻²⁹.<br>It was also almost completely wrong.</p>
+  <div class="slide-num">2/12</div>
+</div>
+
+<!-- Slide 3: Research question -->
+<div class="slide">
+  <h2>The Research Question</h2>
+  <p class="subtitle">Can daily OHLCV data produce a statistically valid,<br>economically executable, and scalable A-share strategy?</p>
+  <div style="display:flex;gap:1.5rem;max-width:700px;flex-wrap:wrap;justify-content:center;">
+    <div class="card" style="flex:1;min-width:180px;"><h3>Test 1</h3><p>Is the predictive signal real?</p></div>
+    <div class="card" style="flex:1;min-width:180px;"><h3>Test 2</h3><p>Can it survive execution and costs?</p></div>
+    <div class="card" style="flex:1;min-width:180px;"><h3>Test 3</h3><p>Can it survive liquidity and capacity?</p></div>
+  </div>
+  <div class="slide-num">3/12</div>
+</div>
+
+<!-- Slide 4: How I fooled myself -->
+<div class="slide">
+  <h2>Four Self-Deceptions</h2>
+  <div class="leak-grid">
+    <div class="leak-item"><div class="leak-title">📅 Future entered the past</div><span class="leak-before">IC 0.94</span> → <span class="leak-after">IC 0.10</span><br>Contemporaneous target leakage</div>
+    <div class="leak-item"><div class="leak-title">🔄 Stock predicted itself</div><span class="leak-before">IC 0.76</span> → <span class="leak-after">IC 0.12</span><br>Own-stock factor contamination</div>
+    <div class="leak-item"><div class="leak-title">👻 Survivors chose the sample</div>Snapshot universe → PIT 4,073 stocks<br>Survivorship bias eliminated</div>
+    <div class="leak-item"><div class="leak-title">📆 Calendar remembered</div>Raw levels → Cross-sectional ranks<br>Temporal encoding removed</div>
+  </div>
+  <div class="slide-num">4/12</div>
+</div>
+
+<!-- Slide 5: Adversarial pipeline -->
+<div class="slide dark-accent">
+  <h2>Building a System to Attack Myself</h2>
+  <div class="stats">
+    <div class="stat"><div class="val pass">3-fold</div><div class="label">Walk-forward</div></div>
+    <div class="stat"><div class="val pass">20-seed</div><div class="label">Ensemble</div></div>
+    <div class="stat"><div class="val pass">3 tests</div><div class="label">Null infrastructure</div></div>
+    <div class="stat"><div class="val pass">Pre-reg</div><div class="label">Decision gates</div></div>
+  </div>
+  <p class="quote">"I redesigned the pipeline so that it became harder for me to obtain a positive result."</p>
+  <div class="slide-num">5/12</div>
+</div>
+
+<!-- Slide 6: Three Collapses -->
+<div class="slide">
+  <h2>The Three Collapses</h2>
+  <div class="grid-3">
+    <div class="card"><h3>Statistical Illusion</h3><p>89% collapse after fixing target leakage. Remaining signal real but 10× smaller.</p></div>
+    <div class="card"><h3>Economic Failure</h3><p>Statistically significant rankings → negative absolute returns with costs and execution.</p></div>
+    <div class="card"><h3>Scalability Collapse</h3><p>48% of holdings in bottom liquidity quintile. U50/U30 all negative.</p></div>
+  </div>
+  <div class="slide-num">6/12</div>
+</div>
+
+<!-- Slide 7: The Verdict -->
+<div class="slide dark-accent">
+  <h2>The Signal Was Real. The Strategy Was Not.</h2>
+  <div style="max-width:450px;margin:1rem auto;">
+    <div class="verdict-row"><span class="icon pass">✅</span> Cross-sectional predictability</div>
+    <div class="verdict-row"><span class="icon pass">✅</span> Time-aware significance (NW t > 9)</div>
+    <div class="verdict-row"><span class="icon pass">✅</span> Within-Q1 stock selection</div>
+    <div class="verdict-row" style="margin-top:0.8rem;"><span class="icon fail">❌</span> Positive liquid-universe return</div>
+    <div class="verdict-row"><span class="icon fail">❌</span> Acceptable drawdown (< 25%)</div>
+    <div class="verdict-row"><span class="icon fail">❌</span> Scalable capacity</div>
+  </div>
+  <p style="text-align:center;color:var(--red);font-weight:700;font-size:1.3rem;margin-top:1.5rem;">TERMINATED</p>
+  <div class="slide-num">7/12</div>
+</div>
+
+<!-- Slide 8: Belief update timeline -->
+<div class="slide">
+  <h2>Bayesian Belief Updating</h2>
+  <div class="timeline-h">
+    <div class="tl-node"><div class="tl-stage">V1</div><div class="tl-desc">Naive: IC 0.94<br>Too good</div></div>
+    <div class="tl-node"><div class="tl-stage">V2</div><div class="tl-desc">Leak audit<br>IC → 0.10</div></div>
+    <div class="tl-node"><div class="tl-stage">V3</div><div class="tl-desc">Frozen baseline<br>IC 0.108 ✅</div></div>
+    <div class="tl-node"><div class="tl-stage">V4</div><div class="tl-desc">Portfolio tests<br>U50 ❌</div></div>
+    <div class="tl-node kill"><div class="tl-stage" style="color:var(--red);">KILL</div><div class="tl-desc" style="color:var(--red);">OHLCV<br>terminated</div></div>
+  </div>
+  <p style="text-align:center;color:var(--muted);margin-top:2rem;font-size:0.9rem;">Not trial-and-error. Each experiment revised my confidence in the hypothesis.</p>
+  <div class="slide-num">8/12</div>
+</div>
+
+<!-- Slide 9: Research integrity -->
+<div class="slide dark-accent">
+  <h2>Research Integrity Scorecard</h2>
+  <div style="max-width:500px;margin:1rem auto;font-size:1rem;">
+    <div class="verdict-row"><span class="icon fail">✗</span> Publish only the best model?</div>
+    <div class="verdict-row"><span class="icon fail">✗</span> Reuse the blind test period?</div>
+    <div class="verdict-row"><span class="icon fail">✗</span> Hide failed experiments?</div>
+    <div class="verdict-row"><span class="icon fail">✗</span> Change gates after seeing results?</div>
+    <div class="verdict-row" style="margin-top:0.8rem;"><span class="icon pass">✓</span> Terminate a favored hypothesis?</div>
+  </div>
+  <div class="slide-num">9/12</div>
+</div>
+
+<!-- Slide 10: What I learned -->
+<div class="slide">
+  <h2>What This Changed</h2>
+  <ul style="font-size:1.1rem;">
+    <li>A clean negative result is worth more than a profitable-looking lie.</li>
+    <li>Statistical significance ≠ economic investability.</li>
+    <li>The hardest skill is killing your own ideas when the evidence says no.</li>
+    <li>Best system design: build something that can <span style="color:var(--red);">prove you wrong</span>.</li>
+  </ul>
+  <p class="quote">"I began trying to predict stock returns.<br>I finished learning how easily a researcher can predict the past."</p>
+  <div class="slide-num">10/12</div>
+</div>
+
+<!-- Slide 11: The artifact -->
+<div class="slide dark-accent">
+  <h2>The Deliverable</h2>
+  <div class="grid-3">
+    <div class="card"><h3>📊 Interactive Site</h3><p>Evidence-driven landing page. Every number traceable to evidence.json.</p></div>
+    <div class="card"><h3>📄 Technical Report</h3><p>LaTeX, 20+ pages, 8 cited papers. Full methodology and decision framework.</p></div>
+    <div class="card"><h3>🔬 Reproducible Repo</h3><p>validate_evidence.py, unit tests, CI/CD, GitHub Pages. Zero build step.</p></div>
+  </div>
+  <p style="text-align:center;color:var(--muted);margin-top:1.5rem;font-size:0.9rem;">github.com/DresdenGman/the-backtest-that-lied</p>
+  <div class="slide-num">11/12</div>
+</div>
+
+<!-- Slide 12: Closing -->
+<div class="slide hero">
+  <h1 class="small">The most valuable output was not a trading signal.</h1>
+  <p class="subtitle" style="font-size:1.3rem;">It was a research system capable of proving me wrong.</p>
+  <div style="margin-top:2rem;color:var(--muted);font-size:0.9rem;">
+    BRS Student Researcher · July 2026<br>
+    <span style="color:var(--accent);">The Backtest That Lied</span>
+  </div>
+  <div class="slide-num">12/12</div>
+</div>
+
+</body>
+</html>

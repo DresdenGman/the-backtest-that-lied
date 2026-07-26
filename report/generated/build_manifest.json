@@ -1,0 +1,12 @@
+{
+  "evidence_keys_used": 17,
+  "collapse_count": 3,
+  "exhibit_count": 3,
+  "generated_files": [
+    "portfolio_results.tex",
+    "evidence_map.tex",
+    "evidence_macros.tex",
+    "decision_gates.tex",
+    "experiment_summary.tex"
+  ]
+}

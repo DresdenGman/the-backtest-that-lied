@@ -1,0 +1,60 @@
+\section{The Signal Was Real. The Strategy Was Not.}
+
+The central finding of this investigation is the distinction between \textit{what can be predicted} and \textit{what can be traded}. Table~\ref{tab:gates} summarizes the decision framework.
+
+\begin{table}[htbp]
+\centering
+\caption{Decision gates and outcomes for the OHLCV-only strategy.}
+\label{tab:gates}
+\begin{table}[htbp]
+\centering
+\caption{Decision gates and outcomes.}
+\label{tab:gates}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Criterion} & \textbf{Result} & \textbf{Gate} \\
+\midrule
+Cross-sectional predictability & \valid{Passed} & IC $> 0$, NW $t > 2$ \\
+Time-aware significance & \valid{Passed} & Bootstrap CI excludes 0 \\
+Within-Q1 stock selection & \valid{Passed} & Excess $> 0$ \\
+Positive liquid-universe return & \invalid{Failed} & Net $< 0$ \\
+Acceptable drawdown & \invalid{Failed} & DD $> 25\%$ \\
+Scalable capacity & \invalid{Failed} & Q1 holds \QOneHoldingsPct \\
+\midrule
+\textbf{Final Decision} & \textbf{TERMINATED} & OHLCV-only branch closed \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{table}
+
+\subsection{Prediction vs.\ Decision}
+Cross-sectional return prediction---even statistically robust prediction---is not the same as portfolio construction. A model that ranks stocks correctly by their expected returns has accomplished only the first step of a multi-stage problem. The remaining steps---universe selection, execution timing, position sizing, cost management, and drawdown control---each interact nonlinearly with the prediction signal.
+
+In this project, each step revealed a new constraint:
+
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Statistical significance} survived all leakage corrections, null tests, and inference adjustments.
+    \item \textbf{Execution} introduced next-open timing, which creates a gap between signal-generation returns and realized returns.
+    \item \textbf{Costs} consumed 4+ percentage points of annual return, turning a flat gross signal into a clearly negative net result in liquid universes.
+    \item \textbf{Liquidity} concentrated the signal in stocks too small to trade at scale, creating a fundamental capacity ceiling.
+    \item \textbf{Drawdown} remained above the 25\% threshold in all liquid-universe configurations.
+\end{itemize}
+
+\subsection{Statistical vs.\ Economic Significance}
+The project distinguishes four levels of ``significance'' that are often conflated:
+
+\begin{enumerate}[label=(\arabic*),leftmargin=*]
+    \item \textbf{Statistical significance:} Can the null hypothesis of no predictive ability be rejected? \textbf{Answer: Yes.}
+    \item \textbf{Economic significance:} Is the magnitude of predictability large enough to matter after costs? \textbf{Answer: Borderline---positive in the full universe, negative in liquid universes.}
+    \item \textbf{Implementation feasibility:} Can the strategy be executed under realistic constraints? \textbf{Answer: Only in stocks too small to trade at scale.}
+    \item \textbf{Scalability:} Can the strategy absorb meaningful capital? \textbf{Answer: No. Capacity is capped by low-liquidity dependence.}
+\end{enumerate}
+
+These four levels form a progressively stricter filter. Most student ML-finance projects stop at level (1). This project reached level (4) and found the strategy insufficient.
+
+\subsection{The Discipline of Stopping}
+The hardest methodological decision in this project was terminating the OHLCV-only branch after weeks of work. The temptation to continue---to add another factor, try another horizon, adjust a threshold, or report only the full-universe result---was substantial. Each of these adjustments would have been easy to rationalize as ``further research'' rather than post-hoc optimization.
+
+The pre-registered decision gates were designed specifically to prevent this. By declaring success criteria before seeing results, and by forbidding gate changes after results were known, the protocol removed the researcher's ability to move the goalposts. When all rescue attempts (residualization, multi-horizon targets) failed the same gates, the only honest decision was termination.
+
+This is not a failure of the research program. It is the research program's primary output: a system that can distinguish between what one wants to be true and what the evidence supports.

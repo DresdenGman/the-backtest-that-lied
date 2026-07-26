@@ -1,0 +1,22 @@
+\section{Reproducibility}
+
+\subsection{What Is Reproducible}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Evidence validation:} All metrics in this report can be validated by running \texttt{python scripts/validate\_evidence.py} and \texttt{python -m unittest discover -s tests} from the repository root.
+    \item \textbf{Website rendering:} The interactive landing page (\texttt{index.html}) runs with \texttt{python scripts/serve.py} and loads all displayed values from \texttt{data/evidence.json}.
+    \item \textbf{Report metrics:} All numerical claims in this report are generated from \texttt{data/evidence.json} by \texttt{report/build.py}. The generated macros in \texttt{report/../generated/} are the sole source of metric values.
+\end{itemize}
+
+\subsection{What Is Not Fully Reproducible}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Model training:} The original LightGBM training runs require the RQAlpha market-data bundle (\textasciitilde 3.3GB), which is proprietary and not redistributable. Training scripts are included but data-dependent.
+    \item \textbf{Raw data:} Daily OHLCV data is not included in the repository.
+    \item \textbf{Prediction artifacts:} Per-stock, per-month prediction files are referenced by path in \texttt{evidence.json} but stored locally only.
+\end{itemize}
+
+\subsection{Repository}
+\begin{verbatim}
+https://github.com/DresdenGman/the-backtest-that-lied
+\end{verbatim}
+
+Commit \texttt{70e7ec7} (v1.0.0) contains the frozen landing page and evidence package. This report corresponds to release v1.1.0.

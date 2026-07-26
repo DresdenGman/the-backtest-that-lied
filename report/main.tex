@@ -1,0 +1,83 @@
+% The Backtest That Lied — Technical Report
+% Evidence-backed LaTeX document. All metrics from data/evidence.json via build.py.
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+
+% Colors — valid/invalid status indicators
+\definecolor{validgreen}{RGB}{63,185,80}
+\definecolor{invalidred}{RGB}{248,81,73}
+\definecolor{amber}{RGB}{210,153,34}
+\newcommand{\valid}[1]{\textcolor{validgreen}{#1}}
+\newcommand{\invalid}[1]{\textcolor{invalidred}{#1}}
+\newcommand{\warn}[1]{\textcolor{amber}{#1}}
+
+% Title
+\title{The Backtest That Lied:\\[0.3em]
+       \large A Forensic Investigation of Leakage, Implementation Failure, \\
+       and Liquidity Dependence in A-Share Machine Learning}
+\author{BRS Student Researcher}
+\date{July 2026}
+
+% Generated evidence macros
+\input{generated/evidence_macros.tex}
+
+\begin{document}
+
+\maketitle
+
+% ---- Sections ----
+\input{sections/01_abstract}
+\input{sections/02_introduction}
+\input{sections/03_research_question}
+\input{sections/04_data_and_methodology}
+\input{sections/05_the_three_collapses}
+\input{sections/06_portfolio_implementation}
+\input{sections/07_liquidity_attribution}
+\input{sections/08_residual_and_horizon}
+\input{sections/09_discussion}
+\input{sections/10_limitations}
+\input{sections/11_conclusion}
+
+% ---- Appendices ----
+\appendix
+\input{appendix/evidence_map}
+\input{appendix/experiment_ledger}
+\input{appendix/reproducibility}
+
+% Bibliography — manual thebibliography (no biber/biblatex available)
+\begin{thebibliography}{99}
+
+\bibitem{gu2020} Gu, S., Kelly, B., \& Xiu, D. (2020). Empirical Asset Pricing via Machine Learning. \textit{Review of Financial Studies}, 33(5), 2223--2273.
+
+\bibitem{leippold2022} Leippold, M., Wang, Q., \& Zhou, W. (2022). Machine Learning in the Chinese Stock Market. \textit{Journal of Financial Economics}, 145(2), 64--82.
+
+\bibitem{liu2019} Liu, J., Stambaugh, R.\ F., \& Yuan, Y. (2019). Size and Value in China. \textit{Journal of Financial Economics}, 134(1), 48--69.
+
+\bibitem{garleanu2013} G\^arleanu, N., \& Pedersen, L.\ H. (2013). Dynamic Trading with Predictable Returns and Transaction Costs. \textit{Journal of Finance}, 68(6), 2309--2340.
+
+\bibitem{lo1990} Lo, A.\ W., \& MacKinlay, A.\ C. (1990). Data-Snooping Biases in Tests of Financial Asset Pricing Models. \textit{Review of Financial Studies}, 3(3), 431--467.
+
+\bibitem{bailey2014} Bailey, D.\ H., Borwein, J.\ M., L\'opez de Prado, M., \& Zhu, Q.\ J. (2014). Pseudo-Mathematics and Financial Charlatanism. \textit{Notices of the AMS}, 61(5), 458--471.
+
+\bibitem{newey1987} Newey, W.\ K., \& West, K.\ D. (1987). A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix. \textit{Econometrica}, 55(3), 703--708.
+
+\bibitem{efron1993} Efron, B., \& Tibshirani, R.\ J. (1993). An Introduction to the Bootstrap. \textit{Monographs on Statistics and Applied Probability}, 57.
+
+\end{thebibliography}
+
+\end{document}

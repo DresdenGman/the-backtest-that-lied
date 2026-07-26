@@ -1,0 +1,33 @@
+\section{The Three Collapses}
+
+This section documents the three stages through which an apparently extraordinary result was progressively dismantled.
+
+\subsection{Collapse I: Statistical Illusion}
+
+\textbf{Initial belief:} A LightGBM model with 20 technical features could predict next-month cross-sectional A-share returns with a monthly rank IC of \InitialIC.
+
+\textbf{What was wrong:} The model was predicting the contemporaneous return, not the forward return. The target variable was misaligned: features at the end of month $t$ were being used to predict the return \textit{during} month $t$, not month $t+1$. This is a classic look-ahead bias in time-series modeling.
+
+\textbf{Detection:} A date-shift scan was performed, computing the IC at shift $k$ for $k \in \{-3,\dots,+3\}$. The IC peaked at $k = 0$ (contemporaneous) rather than $k = +1$ (forward). In a correctly specified model, the peak should occur at the forward horizon being predicted.
+
+\textbf{Correction:} The target variable was shifted forward by one period: $\text{target}_t = r_{t+1}$ rather than $r_t$. After correction, the IC collapsed from \InitialIC{} to \CorrectedIC.
+
+\textbf{Interpretation:} \RelCollapse{} of the apparent predictive power was a mechanical illusion created by predicting returns that had already occurred. The absolute decline was \AbsDecline{} IC points. The remaining signal, while real, was an order of magnitude smaller than the original result suggested.
+
+\subsection{Collapse II: Economic Implementation}
+
+\textbf{Initial belief:} A statistically significant IC of \BaselineIC{} should translate into positive portfolio returns.
+
+\textbf{What was wrong:} Statistical predictability and economic investability are different properties. The translation from cross-sectional ranking to portfolio return introduces execution timing, transaction costs, turnover, and benchmark selection---none of which are captured by the IC alone.
+
+\textbf{Results:} When implemented as an executable next-open portfolio with realistic costs (31bp round-trip), the strategy in the top-50\%-by-ADV20 universe (U50) produced a net annual return of \ULiquidLoss{} with a maximum drawdown of \MaxDrawdownPct. The benchmark (equal-weight U50) returned $-5.9\%$ annually, so the strategy generated positive benchmark-relative excess of +4.9\%. However, absolute return remained negative.
+
+\textbf{Interpretation:} Positive excess over a declining benchmark is not sufficient to declare a strategy investable. The absolute return matters for an investor who can choose between the strategy and a risk-free alternative. Transaction costs were important contributors to the performance gap, but they were not the sole cause of failure---the underlying gross returns in the liquid universe were insufficient even before costs.
+
+\subsection{Collapse III: Scalability}
+
+\textbf{Initial belief:} The strategy was profitable in the full universe (U100 net annual +\UFullNet) and simply needed the right execution universe.
+
+\textbf{What was wrong:} The full-universe performance was concentrated overwhelmingly in the lowest-liquidity quintile. ADV20 quintile decomposition revealed that \QOneHoldingsPct{} of all holdings were in Q1 (median daily turnover \textyen 19M). Within Q1, genuine stock selection was demonstrated (\QOneExcessPct{} monthly excess over Q1 equal-weight). However, in the liquid U50 universe, returns turned negative.
+
+\textbf{Interpretation:} The model had learned to identify stocks that would perform well---but only among the smallest, least liquid names. This is consistent with the broader literature on Chinese equity predictability (Leippold, Wang, and Zhou, 2022), which finds the strongest short-horizon predictability in the smallest stocks. The strategy could not be scaled because the alpha existed only where capacity did not.

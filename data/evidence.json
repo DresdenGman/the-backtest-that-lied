@@ -1,0 +1,366 @@
+{
+  "project": {
+    "title": "The Backtest That Lied",
+    "subtitle": "How I Built, Broke, and Rejected an A-Share Machine-Learning Strategy",
+    "author": "BRS Student Researcher",
+    "date": "2026-07",
+    "repository": "https://github.com/a24300/the-backtest-that-lied"
+  },
+  "metrics": {
+    "target_leak_before_ic": {
+      "value": 0.94,
+      "unit": "monthly rank IC",
+      "experiment_id": "EXP_TARGET_SHIFT_01",
+      "artifact": "results/target_shift_audit.csv",
+      "period": "2017-01 to 2024-12",
+      "universe": "PIT 4,073 stocks",
+      "protocol": "3-fold walk-forward, 20-seed ensemble",
+      "status": "invalid — contemporaneous target leakage"
+    },
+    "target_leak_after_ic": {
+      "value": 0.1,
+      "unit": "monthly rank IC",
+      "experiment_id": "EXP_TARGET_SHIFT_01",
+      "artifact": "results/target_shift_audit.csv",
+      "period": "2017-01 to 2024-12",
+      "universe": "PIT 4,073 stocks",
+      "protocol": "3-fold walk-forward, 20-seed ensemble",
+      "status": "validated"
+    },
+    "crossfit_ic_before": {
+      "value": 0.76,
+      "unit": "monthly IC",
+      "experiment_id": "EXP_CROSSFIT_01",
+      "artifact": "results/crossfit_audit.csv",
+      "status": "invalid — own-stock factor contamination"
+    },
+    "crossfit_ic_after": {
+      "value": 0.12,
+      "unit": "monthly IC",
+      "experiment_id": "EXP_CROSSFIT_01",
+      "artifact": "results/crossfit_audit.csv",
+      "status": "validated — cross-fitted factor construction"
+    },
+    "frozen_baseline_mean_ic": {
+      "value": 0.108,
+      "unit": "monthly rank IC",
+      "experiment_id": "EXP_BASELINE_V43",
+      "artifact": "results/baseline_v43_summary.csv",
+      "period": "2017-01 to 2024-12",
+      "universe": "PIT 4,073 stocks",
+      "protocol": "3-fold walk-forward, 20-seed ensemble, cross-sectional rank normalization",
+      "status": "validated"
+    },
+    "frozen_baseline_nw_t6": {
+      "value": 10.5,
+      "unit": "Newey-West t-statistic (lag 6)",
+      "experiment_id": "EXP_BASELINE_V43",
+      "artifact": "results/baseline_v43_summary.csv",
+      "status": "validated"
+    },
+    "frozen_baseline_bootstrap_ci_lower": {
+      "value": 0.087,
+      "unit": "block bootstrap 95% CI lower bound",
+      "experiment_id": "EXP_BASELINE_V43",
+      "artifact": "results/baseline_v43_summary.csv",
+      "status": "validated"
+    },
+    "u100_raw_net_annual": {
+      "value": 0.0682,
+      "unit": "net annual return",
+      "experiment_id": "EXP_DP1_PORTFOLIO",
+      "artifact": "results/dp1_portfolio_summary.csv",
+      "portfolio": "U100_B10_EW",
+      "cost_scenario": "base31",
+      "execution": "next-open",
+      "status": "positive but Q1-dependent"
+    },
+    "u50_resid_net_annual": {
+      "value": -0.0095,
+      "unit": "net annual return",
+      "experiment_id": "EXP_STEP5_ABLATION",
+      "artifact": "results/step5_comparison.csv",
+      "portfolio": "U50_B10_EW",
+      "target": "RESID",
+      "cost_scenario": "base31",
+      "status": "negative — failed investability"
+    },
+    "u50_max_drawdown": {
+      "value": 0.613,
+      "unit": "maximum drawdown",
+      "experiment_id": "EXP_STEP5_ABLATION",
+      "artifact": "results/step5_comparison.csv",
+      "status": "failed — exceeds 25% gate"
+    },
+    "q1_within_excess": {
+      "value": 0.0271,
+      "unit": "monthly excess over Q1-EW",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "validated — genuine within-quintile stock selection"
+    },
+    "q1_share_of_u100_holdings": {
+      "value": 0.481,
+      "unit": "fraction of holdings",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed — signal concentrated in lowest-liquidity quintile"
+    },
+    "u50_ew_bench_annual": {
+      "value": -0.0587,
+      "unit": "annual return",
+      "experiment_id": "EXP_DP1_PORTFOLIO",
+      "artifact": "results/dp1_portfolio_summary.csv",
+      "status": "benchmark"
+    },
+    "iid_null_mean_ic": {
+      "value": -0.005,
+      "unit": "mean IC",
+      "experiment_id": "EXP_NULL_IID_01",
+      "artifact": "results/stage1_null_results.csv",
+      "status": "validated — null infrastructure clean"
+    },
+    "permutation_audit_corr": {
+      "value": 0.001,
+      "unit": "Pearson correlation",
+      "experiment_id": "EXP_NULL_PERM_01",
+      "artifact": "results/stage1_null_results.csv",
+      "status": "validated — labels properly shuffled"
+    },
+    "h3_u50_net_annual": {
+      "value": -0.2168,
+      "unit": "net annual return",
+      "experiment_id": "EXP_MH1R_HORIZON",
+      "artifact": "results/mh1r.csv",
+      "status": "rejected — longer horizon did not improve liquid performance"
+    },
+    "h6_u50_net_annual": {
+      "value": -0.1522,
+      "unit": "net annual return",
+      "experiment_id": "EXP_MH1R_HORIZON",
+      "artifact": "results/mh1r.csv",
+      "status": "rejected — longer horizon did not improve liquid performance"
+    }
+  },
+  "collapses": [
+    {
+      "id": "collapse_statistical",
+      "title": "Collapse I — Statistical Illusion",
+      "belief": "A near-perfect IC of 0.94 meant the model could predict stock returns.",
+      "intervention": "Fixed contemporaneous target timing: features at month t must predict returns at month t+1, not month t.",
+      "before": {
+        "metric": "target_leak_before_ic"
+      },
+      "after": {
+        "metric": "target_leak_after_ic"
+      },
+      "interpretation": "89% of the apparent IC was from predicting the same month's return. The remaining signal is real but an order of magnitude smaller.",
+      "rule_adopted": "Always shift(-1) and verify with date-shift scan."
+    },
+    {
+      "id": "collapse_economic",
+      "title": "Collapse II — Economic Implementation",
+      "belief": "A statistically significant IC ≈ 0.10 should translate to positive portfolio returns.",
+      "intervention": "Built executable next-open portfolio with realistic transaction costs, 90/80 no-trade bands, and 5 cost scenarios.",
+      "before": {
+        "description": "Rank IC = 0.108, NW t = 10.5, bootstrap CI excludes zero"
+      },
+      "after": {
+        "metric": "u50_resid_net_annual",
+        "secondary": "u50_max_drawdown"
+      },
+      "interpretation": "Statistical predictability survived. Absolute investability did not. Costs and real execution turned a ranking signal into negative net returns in liquid universes.",
+      "rule_adopted": "Never evaluate a strategy by IC alone. Always test through executable portfolios with costs."
+    },
+    {
+      "id": "collapse_scalability",
+      "title": "Collapse III — Scalability",
+      "belief": "The strategy works — it just needs the right universe.",
+      "intervention": "Decomposed returns by ADV20 quintile. Tested top 50%, top 30%, and full universe.",
+      "before": {
+        "metric": "u100_raw_net_annual"
+      },
+      "after": {
+        "description": "U50 net = −0.95%. 48% of U100 holdings in Q1 (median ADV ¥19M). Signal not scalable."
+      },
+      "interpretation": "The model ranked stocks effectively, but the ranking heavily favored the least liquid quintile. In tradable universes, returns turned negative. Genuine alpha existed only in stocks too small to trade at meaningful scale.",
+      "rule_adopted": "Always report liquidity attribution. Scalability is a separate dimension from predictability."
+    }
+  ],
+  "exhibits": {
+    "primary": [
+      {
+        "letter": "A",
+        "title": "The Future Entered the Past",
+        "belief": "Features at end of month t predicted next-month returns.",
+        "problem": "The target was the contemporaneous return, not the forward return. The model was predicting what already happened.",
+        "detection": "Date-shift scan showed IC peaked at k=0 (same month), not k=+1 (next month).",
+        "fix": "Applied shift(-1) per stock to ensure features at t predict returns at t+1.",
+        "before_metric": "target_leak_before_ic",
+        "after_metric": "target_leak_after_ic"
+      },
+      {
+        "letter": "B",
+        "title": "The Stock Helped Construct Its Own Benchmark",
+        "belief": "Residualizing returns against market factors would isolate stock-specific alpha.",
+        "problem": "Each stock's own return contributed to the factor used to residualize it. This created a mechanical link between factor and target.",
+        "detection": "Cross-fitted factor construction: factors built from one half of stocks, applied to the other half. IC collapsed from 0.76 to 0.12.",
+        "fix": "Hash-based two-way cross-fitting with 5 deterministic seeds.",
+        "before_metric": "crossfit_ic_before",
+        "after_metric": "crossfit_ic_after"
+      },
+      {
+        "letter": "C",
+        "title": "Alpha Disappeared When Liquidity Became Tradable",
+        "belief": "The signal would generalize across all stocks.",
+        "problem": "The model was essentially a 'buy illiquid stocks' signal. 48% of holdings were in the bottom quintile by trading volume. Filtering to tradable stocks turned returns negative.",
+        "detection": "ADV20 quintile decomposition. Within-Q1 selection was genuine (+2.71% excess), but U50/U30 were unprofitable.",
+        "fix": "None. This is a fundamental limitation of price-volume data: predictability exists only where capacity doesn't.",
+        "before_metric": "u100_raw_net_annual",
+        "after_metric": "u50_resid_net_annual"
+      }
+    ],
+    "additional": [
+      {
+        "letter": "D",
+        "title": "The Survivors Chose the Sample",
+        "summary": "PE data from a 2026 snapshot meant only stocks still alive in 2026 could appear in 2010. Fixed by switching to full PIT universe (4,073 stocks)."
+      },
+      {
+        "letter": "E",
+        "title": "The Model Remembered the Calendar",
+        "summary": "Raw feature levels encoded time periods and listing cohorts. Shuffled-label models still produced IC ≈ 0.07. Fixed by cross-sectional rank normalization."
+      },
+      {
+        "letter": "F",
+        "title": "Zero Trading Costs Made Everything Tradable",
+        "summary": "Ignoring costs produced false investability. Fixed by implementing exact buy/sell cost tracking with 5 cost scenarios."
+      },
+      {
+        "letter": "G",
+        "title": "Longer Horizons Didn't Fix the Problem",
+        "summary": "3-month and 6-month prediction targets could not migrate the signal into liquid stocks. All horizons produced negative U50 returns."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "stage": "V1",
+      "belief": "Price-volume factors + LightGBM can predict A-share returns.",
+      "evidence": "IC = 0.76, 96/96 positive months.",
+      "updated": "Suspicious. IC magnitude incompatible with published research."
+    },
+    {
+      "stage": "V2",
+      "belief": "There may be data leakage.",
+      "evidence": "Date-shift scan: IC peak at k=0, not k=+1. Cross-fitting: IC 0.76→0.12.",
+      "updated": "84% of apparent alpha was mechanical. Rebuild pipeline."
+    },
+    {
+      "stage": "V3",
+      "belief": "With all leaks fixed, residual signal may still exist.",
+      "evidence": "Frozen baseline IC ≈ 0.108, NW t > 9, bootstrap CI excludes zero.",
+      "updated": "Statistically significant signal exists. Is it investable?"
+    },
+    {
+      "stage": "V4",
+      "belief": "IC ≈ 0.10 should translate to positive portfolio returns.",
+      "evidence": "U50 net = −0.95%. Signal in Q1 only.",
+      "updated": "Statistical alpha ≠ investable alpha. Economically fragile."
+    },
+    {
+      "stage": "Final",
+      "belief": "Multi-horizon or residualization might rescue the strategy.",
+      "evidence": "H3/H6 both negative U50. Residualization improves 1.2% but can't reach profitability.",
+      "updated": "Decision: TERMINATE OHLCV-only development.",
+      "status": "killed"
+    }
+  ],
+  "integrity_checks": [
+    {
+      "question": "Did I publish only the best model?",
+      "answer": false
+    },
+    {
+      "question": "Did I reuse the blind test period?",
+      "answer": false
+    },
+    {
+      "question": "Did I hide failed experiments?",
+      "answer": false
+    },
+    {
+      "question": "Did I change evaluation gates after seeing results?",
+      "answer": false
+    },
+    {
+      "question": "Did I terminate a favored hypothesis when evidence turned against it?",
+      "answer": true
+    }
+  ],
+  "folds": {
+    "fold1": {
+      "train": "2010-2016",
+      "validate": "2017-2019",
+      "ic": 0.092,
+      "icir": 0.82,
+      "pos_rate": 0.778
+    },
+    "fold2": {
+      "train": "2013-2019",
+      "validate": "2020-2021",
+      "ic": 0.105,
+      "icir": 0.75,
+      "pos_rate": 0.75
+    },
+    "fold3": {
+      "train": "2015-2021",
+      "validate": "2022-2024",
+      "ic": 0.125,
+      "icir": 0.9,
+      "pos_rate": 0.889
+    },
+    "pooled": {
+      "months": 96,
+      "mean_ic": 0.108,
+      "nw_t3": 9.37,
+      "nw_t6": 10.5,
+      "bootstrap_ci_lower": 0.083,
+      "bootstrap_ci_upper": 0.131
+    }
+  },
+  "pipeline_scenarios": [
+    {
+      "id": "naive",
+      "label": "Naive pipeline",
+      "description": "Contemporaneous target, survivorship universe, own-stock factor contamination",
+      "status": "invalid",
+      "display_value": "IC = 0.94",
+      "metrics": [
+        "target_leak_before_ic",
+        "crossfit_ic_before"
+      ]
+    },
+    {
+      "id": "target_fixed",
+      "label": "Target-corrected",
+      "description": "Forward return verified, shift(-1) applied, date-shift scan passed",
+      "status": "validated",
+      "display_metric": "target_leak_after_ic"
+    },
+    {
+      "id": "leak_safe",
+      "label": "Leakage-safe",
+      "description": "PIT universe, cross-fitted factors, cross-sectional rank normalization, null infrastructure verified",
+      "status": "validated",
+      "display_metric": "frozen_baseline_mean_ic"
+    },
+    {
+      "id": "executable",
+      "label": "Executable portfolio",
+      "description": "Next-open execution, 31bp costs, 90/80 buffer, U50 universe — negative absolute return despite positive excess",
+      "status": "validated",
+      "display_metric": "u50_resid_net_annual"
+    }
+  ]
+}

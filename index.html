@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Backtest That Lied</title>
+<link rel="stylesheet" href="assets/css/three-collapses.css">
+<style>
+  /* Additional page-level styles */
+  .hero { padding:3rem 0 2rem; text-align:center; }
+  .hero h1 { font-size:2.8rem; font-weight:800; }
+  .hero .tagline { font-size:1.2rem; color:var(--muted); margin:0.8rem 0; }
+  .hero .meta { font-size:0.85rem; color:var(--muted); margin-top:1rem; }
+  .overview { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:2rem 0; }
+  .overview-card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1.2rem; }
+  .overview-card h3 { font-size:0.85rem; color:var(--accent); margin-bottom:0.5rem; }
+  .overview-card p { font-size:0.9rem; color:var(--muted); }
+  .verdict { text-align:center; padding:2rem; margin:2rem 0; border:1px solid var(--border); border-radius:8px; }
+  .verdict h2 { font-size:1.4rem; color:var(--red); border:none; margin:0 0 1rem; }
+  .verdict-table { width:100%; max-width:500px; margin:0 auto; border-collapse:collapse; }
+  .verdict-table td { padding:0.4rem 0.8rem; font-size:0.9rem; }
+  .verdict-table td:first-child { text-align:left; color:var(--muted); }
+  .verdict-table td:last-child { text-align:right; font-weight:600; }
+  .verdict-table .pass { color:var(--green); }
+  .verdict-table .fail { color:var(--red); }
+  .exhibit-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.5rem 0; }
+  .exhibit { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1.2rem; }
+  .exhibit h4 { color:var(--amber); font-size:0.95rem; margin-bottom:0.5rem; }
+  .exhibit h4 .ex-letter { display:inline-block; background:var(--amber); color:#000; width:1.5rem; height:1.5rem; text-align:center; line-height:1.5rem; border-radius:3px; font-size:0.8rem; font-weight:700; margin-right:0.5rem; }
+  .exhibit .ex-belief { font-size:0.85rem; color:var(--muted); font-style:italic; margin-bottom:0.5rem; }
+  .exhibit .ex-fix { font-size:0.85rem; color:var(--text); }
+  .exhibit .ex-meta { font-size:0.7rem; color:var(--muted); margin-top:0.5rem; font-family:'SF Mono',monospace; cursor:pointer; }
+  .exhibit .ex-meta:hover { color:var(--accent); }
+  .additional-exhibits { margin-top:1rem; }
+  .additional-exhibits summary { cursor:pointer; color:var(--muted); font-size:0.9rem; padding:0.5rem 0; }
+  .additional-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+  .add-ex { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1rem; font-size:0.85rem; }
+  .add-ex h4 { color:var(--muted); margin-bottom:0.3rem; }
+  .section-divider { border:none; border-top:1px solid var(--border); margin:3rem 0; }
+  .lesson { font-size:1.1rem; text-align:center; margin:2rem 0; padding:1.5rem; background:var(--card); border-radius:8px; border:1px solid var(--border); }
+  .lesson em { color:var(--accent); }
+  .footer-links { text-align:center; margin:2rem 0; }
+  .footer-links a { display:inline-block; background:var(--accent); color:#000; padding:0.5rem 1.2rem; border-radius:6px; text-decoration:none; font-weight:600; margin:0.3rem; font-size:0.9rem; }
+  .error-banner { display:none; background:#3d1f1f; border:1px solid var(--red); border-radius:8px; padding:1rem; text-align:center; margin:1rem 0; color:var(--red); }
+  .error-banner code { background:transparent; color:var(--amber); }
+  @media(max-width:768px) {
+    .hero h1 { font-size:1.8rem; }
+    .overview { grid-template-columns:1fr; }
+    .exhibit-grid { grid-template-columns:1fr; }
+    .additional-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <h1>The Backtest That Lied</h1>
+  <p class="tagline">How I built, broke, and rejected an A-share machine-learning strategy — and what I learned by killing my own best result.</p>
+  <div class="meta">
+    BRS Student Researcher &middot; July 2026 &middot;
+    <span id="hero-experiment-count">—</span> experiments &middot;
+    <span id="hero-metric-count">—</span> audited metrics
+  </div>
+</div>
+
+<div id="error-banner" class="error-banner"></div>
+
+<!-- OVERVIEW -->
+<h2>Project Overview</h2>
+<div class="overview">
+  <div class="overview-card">
+    <h3>The Question</h3>
+    <p>Can 20 price-volume factors combined with gradient-boosted trees predict next-month A-share returns well enough to build a profitable trading strategy?</p>
+  </div>
+  <div class="overview-card">
+    <h3>The Protocol</h3>
+    <p>3-fold walk-forward validation, 20-seed ensemble, cross-sectional rank normalization, point-in-time universe of 4,073 stocks, next-open execution, transaction-cost scenarios.</p>
+  </div>
+  <div class="overview-card">
+    <h3>The Discovery</h3>
+    <p>In the lowest-liquidity quintile, genuine stock-selection ability exists. But the signal does not generalize to tradable universes. Statistical predictability and economic investability are different things.</p>
+  </div>
+  <div class="overview-card">
+    <h3>The Decision</h3>
+    <p>After 200+ model fits across 6 experimental phases, the OHLCV-only hypothesis was formally terminated. The research branch was closed — not because the model predicted nothing, but because its predictions could not produce scalable positive returns.</p>
+  </div>
+</div>
+
+<!-- THE THREE COLLAPSES -->
+<div class="section-divider"></div>
+<h2>The Three Collapses</h2>
+<div id="collapse-hero" style="font-family:'SF Mono',monospace;font-size:2rem;font-weight:900;color:var(--red);margin:1rem 0;">—</div>
+<div class="collapses" id="collapses-container">
+  <p style="color:var(--muted);text-align:center;">Loading evidence…</p>
+</div>
+
+<!-- VERDICT -->
+<div class="section-divider"></div>
+<div class="verdict">
+  <h2>The Signal Was Real. The Strategy Was Not.</h2>
+  <table class="verdict-table" id="verdict-table">
+    <tr><td>Cross-sectional predictability</td><td class="pass">—</td></tr>
+    <tr><td>Time-aware significance</td><td class="pass">—</td></tr>
+    <tr><td>Within-Q1 stock selection</td><td class="pass">—</td></tr>
+    <tr><td>Positive liquid-universe return</td><td class="fail">—</td></tr>
+    <tr><td>Acceptable drawdown</td><td class="fail">—</td></tr>
+    <tr><td>Scalable capacity</td><td class="fail">—</td></tr>
+  </table>
+  <p style="margin-top:1.5rem;font-size:0.9rem;color:var(--muted);">
+    The frozen baseline retained a mean out-of-sample IC of <span id="verdict-ic">—</span> with strong time-aware inference (Newey-West t &gt; 9, bootstrap CI excludes zero).
+    The final rejection was not "the model predicted nothing." It was that statistical ranking did not survive the transition to executable, cost-aware, liquidity-filtered portfolios.
+    OHLCV-only development was terminated as a scalable core strategy.
+  </p>
+</div>
+
+<!-- EXHIBITS -->
+<div class="section-divider"></div>
+<h2>Evidence Exhibits</h2>
+<div class="exhibit-grid" id="exhibits-container">
+  <p style="color:var(--muted);">Loading evidence…</p>
+</div>
+
+<details class="additional-exhibits">
+  <summary>Additional Evidence (4 exhibits)</summary>
+  <div class="additional-grid" id="additional-exhibits">
+    <p style="color:var(--muted);">Loading…</p>
+  </div>
+</details>
+
+<!-- INTERACTIVE LEAK SWITCHES -->
+<div class="section-divider"></div>
+<h2>Interactive: Leak Switches</h2>
+<p style="color:var(--muted);margin-bottom:1rem;">Each switch represents a data or methodological flaw I discovered. Toggle to see how apparent performance changes. Only historically tested combinations are shown.</p>
+
+<div style="display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:1rem;" id="leak-toggles"></div>
+<div style="text-align:center;padding:1rem;font-family:'SF Mono',monospace;font-size:2rem;font-weight:700;" id="leak-display">—</div>
+<div style="text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:1rem;" id="leak-label"></div>
+<div style="text-align:center;color:var(--amber);font-size:0.8rem;display:none;" id="leak-unsupported">This combination was not historically tested. No result is displayed.</div>
+
+<!-- LESSON -->
+<div class="section-divider"></div>
+<div class="lesson">
+  <p>"I began this project trying to predict stock returns.<br>I finished it learning how easily a researcher can predict the past."</p>
+  <p style="font-size:0.9rem;color:var(--muted);margin-top:1rem;">The hardest skill in research is not finding patterns.<br>It is killing your own ideas when the evidence says no.</p>
+</div>
+
+<!-- LINKS -->
+<div class="footer-links">
+  <a href="https://github.com/a24300/the-backtest-that-lied" target="_blank">GitHub Repository</a>
+  <a href="./paper/technical_report_en.pdf" target="_blank">Technical Report (PDF)</a>
+</div>
+
+</div>
+
+<script src="assets/js/evidence-loader.js"></script>
+<script>
+// ---- INIT ----
+EvidenceLoader.load().then(evidence => {
+  populateAll(evidence);
+}).catch(err => {
+  document.getElementById('error-banner').style.display = 'block';
+  document.getElementById('error-banner').innerHTML = `❌ Failed to load evidence: <code>${err.message}</code>`;
+  document.querySelectorAll('.collapses p, #exhibits-container p, #additional-exhibits p').forEach(el => {
+    el.textContent = 'Evidence unavailable — cannot render this section.';
+  });
+});
+
+function populateAll(e) {
+  const m = e.metrics || {};
+  const fmt = (key) => {
+    const v = m[key];
+    if (!v) return '—';
+    if (v.unit && (v.unit.includes('return') || v.unit.includes('drawdown'))) return (v.value*100).toFixed(1)+'%';
+    return v.value.toFixed(2);
+  };
+  const status = (key) => (m[key]?.status || '').includes('invalid') ? 'invalid' : 'ok';
+
+  // Hero stats
+  document.getElementById('hero-experiment-count').textContent = new Set(Object.values(m).map(v=>v.experiment_id).filter(Boolean)).size;
+  document.getElementById('hero-metric-count').textContent = Object.keys(m).length;
+
+  // Verdict
+  document.getElementById('verdict-ic').textContent = fmt('frozen_baseline_mean_ic');
+
+  // Collapses (delegated to shared component)
+  if (typeof window.renderCollapses === 'function') {
+    window.renderCollapses(e);
+  }
+
+  // Exhibits
+  const ex = e.exhibits || {};
+  const primary = ex.primary || [];
+  const additional = ex.additional || [];
+  const exContainer = document.getElementById('exhibits-container');
+  exContainer.innerHTML = primary.map(exh => `
+    <div class="exhibit">
+      <h4><span class="ex-letter">${exh.letter}</span>${exh.title}</h4>
+      <div class="ex-belief">"${exh.belief}"</div>
+      <div class="ex-fix"><strong>Detection:</strong> ${exh.detection || ''}</div>
+      <div class="ex-fix"><strong>Fix:</strong> ${exh.fix || ''}</div>
+      <div class="ex-meta" title="Click for provenance">${exh.before_metric ? m[exh.before_metric]?.experiment_id : 'N/A'}</div>
+    </div>
+  `).join('');
+
+  const addContainer = document.getElementById('additional-exhibits');
+  addContainer.innerHTML = additional.map(exh => `
+    <div class="add-ex">
+      <h4>${exh.letter}. ${exh.title}</h4>
+      <p>${exh.summary}</p>
+    </div>
+  `).join('');
+
+  // Leak switches — loaded from evidence.json pipeline_scenarios
+  const scenarios = e.pipeline_scenarios || [];
+  
+  const toggleContainer = document.getElementById('leak-toggles');
+  const display = document.getElementById('leak-display');
+  const label = document.getElementById('leak-label');
+  const unsupported = document.getElementById('leak-unsupported');
+  
+  toggleContainer.innerHTML = scenarios.map((s, i) => `
+    <div class="toggle ${i===1?'on':'off'}" data-id="${s.id}" data-status="${s.status}" data-desc="${s.description}" data-metric="${s.display_metric||''}" data-display="${s.display_value||''}" onclick="selectScenario(this)">
+      ${s.label}
+    </div>
+  `).join('');
+
+  window.selectScenario = function(el) {
+    document.querySelectorAll('#leak-toggles .toggle').forEach(t => { t.classList.remove('on'); t.classList.add('off'); });
+    el.classList.add('on'); el.classList.remove('off');
+    
+    const metricKey = el.dataset.metric;
+    const hardDisplay = el.dataset.display;
+    const status = el.dataset.status;
+    
+    if (metricKey && m[metricKey]) {
+      const metric = m[metricKey];
+      const v = metric.value;
+      let displayVal;
+      if (metric.unit && (metric.unit.includes('return') || metric.unit.includes('drawdown')))
+        displayVal = (v * 100).toFixed(1) + '% net annual';
+      else if (metric.unit && metric.unit.includes('IC'))
+        displayVal = 'IC = ' + v.toFixed(2);
+      else
+        displayVal = v.toFixed(2);
+      display.textContent = displayVal;
+    } else if (hardDisplay) {
+      display.textContent = hardDisplay;
+    } else {
+      display.textContent = '—';
+    }
+    
+    label.textContent = el.dataset.desc;
+    display.style.color = status === 'invalid' ? 'var(--red)' : 'var(--text)';
+    unsupported.style.display = 'none';
+  };
+  
+  // Select target_fixed by default
+  const defaultBtn = toggleContainer.querySelector('[data-id="target_fixed"]');
+  if (defaultBtn) selectScenario(defaultBtn);
+
+  console.log('✅ index.html fully populated from evidence.json');
+}
+</script>
+
+</body>
+</html>

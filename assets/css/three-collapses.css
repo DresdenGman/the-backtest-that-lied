@@ -1,0 +1,73 @@
+/* three-collapses.css — Forensic research aesthetic */
+:root {
+  --bg: #0d1117; --card: #161b22; --border: #30363d;
+  --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff;
+  --green: #3fb950; --red: #f85149; --amber: #d29922;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; line-height:1.6; padding:2rem; }
+h1 { font-size:2rem; margin-bottom:0.5rem; }
+h1 span { display:block; font-size:1rem; font-weight:400; color:var(--muted); }
+
+.collapses { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin:2rem 0; }
+
+.collapse-panel {
+  background:var(--card); border:1px solid var(--border); border-radius:8px;
+  padding:1.5rem; display:flex; flex-direction:column;
+}
+.collapse-panel h2 { font-size:1.1rem; color:var(--accent); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
+.collapse-panel .label { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.2rem; }
+.collapse-panel .belief { font-size:0.9rem; color:var(--text); margin-bottom:1rem; font-style:italic; }
+.collapse-panel .intervention { font-size:0.85rem; color:var(--muted); margin-bottom:1.5rem; padding:0.5rem; background:rgba(88,166,255,0.05); border-radius:4px; }
+
+.metric-row { display:flex; justify-content:space-between; align-items:center; margin:0.5rem 0; }
+.metric-row .metric-label { font-size:0.8rem; color:var(--muted); }
+.metric-row .metric-value { font-family:'SF Mono',monospace; font-size:1.3rem; font-weight:700; }
+.metric-row .metric-value.positive { color:var(--green); }
+.metric-row .metric-value.negative { color:var(--red); }
+.metric-row .metric-value.invalid { color:var(--amber); text-decoration:line-through; }
+
+.arrow-section { text-align:center; margin:0.8rem 0; }
+.arrow-section .arrow { color:var(--red); font-size:1.5rem; display:block; }
+.arrow-section .decline { font-family:'SF Mono',monospace; font-size:0.85rem; color:var(--red); }
+
+.interpretation { font-size:0.85rem; color:var(--text); margin:1rem 0; padding:0.5rem; border-left:2px solid var(--amber); }
+
+.evidence-link {
+  margin-top:auto; padding-top:1rem; border-top:1px solid var(--border);
+  font-size:0.75rem; color:var(--muted);
+}
+.evidence-link button {
+  background:none; border:1px solid var(--border); color:var(--accent);
+  padding:0.3rem 0.6rem; border-radius:4px; cursor:pointer; font-size:0.75rem;
+  margin-top:0.3rem;
+}
+.evidence-link button:hover { background:var(--border); }
+
+.provenance-popup {
+  display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  background:var(--card); border:1px solid var(--border); border-radius:8px;
+  padding:1.5rem; z-index:1000; max-width:400px; width:90%; box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+.provenance-popup.show { display:block; }
+.provenance-popup h3 { font-size:0.9rem; margin-bottom:0.8rem; color:var(--accent); }
+.provenance-popup .pv-row { display:flex; justify-content:space-between; margin:0.3rem 0; font-size:0.8rem; }
+.provenance-popup .pv-row .pv-key { color:var(--muted); }
+.provenance-popup .pv-row .pv-val { font-family:'SF Mono',monospace; }
+.provenance-popup .pv-close {
+  position:absolute; top:0.5rem; right:0.8rem; background:none; border:none;
+  color:var(--muted); cursor:pointer; font-size:1.2rem;
+}
+.provenance-popup .status-valid { color:var(--green); }
+.provenance-popup .status-invalid { color:var(--red); }
+
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; }
+.overlay.show { display:block; }
+
+.error-state { text-align:center; padding:3rem; color:var(--red); }
+.error-state code { font-size:0.85rem; display:block; margin:0.5rem 0; }
+
+@media(max-width:768px) {
+  .collapses { grid-template-columns:1fr; }
+  h1 { font-size:1.5rem; }
+}

@@ -1,0 +1,22 @@
+name: Validate Evidence
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate evidence.json
+        run: python scripts/validate_evidence.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests
+      - name: Audit for hardcoded research values
+        run: |
+          echo "Checking for forbidden hardcoded values..."
+          # Check that "84% collapse" never appears
+          ! grep -RIn '84%' index.html assets/js/ || { echo "ERROR: '84%' found in output"; exit 1; }
+          # Check that research IC values are not hardcoded in JS
+          ! grep -RInE '(ic|IC)\s*[=:]\s*0\.(10|76|94|12)' assets/js/ || { echo "ERROR: Hardcoded IC values in JS"; exit 1; }
+          echo "Audit passed."

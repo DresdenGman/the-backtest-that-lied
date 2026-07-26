@@ -367,9 +367,9 @@
         "letter": "C",
         "title": "Alpha Disappeared When Liquidity Became Tradable",
         "belief": "The signal would generalize across all stocks.",
-        "problem": "The model was essentially a 'buy illiquid stocks' signal. 48% of holdings were in the bottom quintile by trading volume. Filtering to tradable stocks turned returns negative.",
+        "problem": "The signal was concentrated in the lowest-liquidity segment. Liquid-universe scalability failed, while maximum feasible capacity was not fully quantified.",
         "detection": "ADV20 quintile decomposition. Within-Q1 selection was genuine (+2.71% excess), but U50/U30 were unprofitable.",
-        "fix": "None. This is a fundamental limitation of price-volume data: predictability exists only where capacity doesn't.",
+        "fix": "The signal was concentrated in the lowest-liquidity segment. Liquid-universe scalability failed, while maximum feasible capacity was not fully quantified.",
         "before_metric": "u100_raw_net_annual",
         "after_metric": "u50_resid_net_annual"
       }

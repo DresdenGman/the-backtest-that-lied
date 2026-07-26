@@ -35,7 +35,7 @@ The OHLCV-only hypothesis was formally terminated. The primary contribution is m
 # ============================================================
 ws('02_introduction.tex', f"""\\section{{Introduction}}
 \\begin{{quote}}\\textit{{A model can predict returns and still fail as a strategy.}}\\end{{quote}}
-Initial result: IC {ic("target_leak_before_ic")} across 96 consecutive OOS months. After four leakages, apparent predictive power collapsed by {cp}\\%.
+Initial result: IC {ic("target_leak_before_ic")} across {int(F("oos_months"))} consecutive OOS months. After four leakages, apparent predictive power collapsed by {cp}\\%.
 Retained signal: mean OOS IC {ic("frozen_baseline_mean_ic")}, NW $t = {raw("frozen_baseline_nw_t6")}$.
 \\begin{{enumerate}}[label=(\\arabic*)]
     \\item Predictability: IC {ic("frozen_baseline_mean_ic")} survived null infrastructure.

@@ -1,6 +1,6 @@
 \section{Data and Methodology}
 \subsection{Data}
-RQAlpha A-share daily market-data bundle, 5,511 historically listed stocks. Point-in-time universe without survivorship filters. Daily OHLCV aggregated to monthly. True PIT fundamental data (market cap, book value, earnings, industry) was unavailable.
+RQAlpha A-share daily market-data bundle, 5511.0 historically listed stocks. Point-in-time universe without survivorship filters. Daily OHLCV aggregated to monthly. True PIT fundamental data (market cap, book value, earnings, industry) was unavailable.
 
 \subsection{Features}
 20 ranked technical indicators: momentum (5/10/20/60/120-day), volatility (5/20/60-day), volume (5/20-day turnover), MA deviation (20/60-day), channel position, RSI(14), turnover, reversal (1/5-day), cross-sectional rank, skewness, breadth. All rank-normalized to $[-1,1]$ per month.
@@ -18,4 +18,4 @@ Monthly rebalance, top 10\% by rank, enter $\ge$90th, retain $\ge$80th. Next-ope
 Cost scenarios: Gross (0bp), Base (13bp buy/18bp sell), Stress (22.5bp/27.5bp).
 
 \subsection{Evidence Architecture}
-All numerical claims generated from \texttt{data/evidence.json} (37 metrics, 3 collapses). \texttt{scripts/validate\_evidence.py} + \texttt{tests/test\_evidence.py} enforce integrity.
+All numerical claims generated from \texttt{data/evidence.json} (39 metrics, 3 collapses). \texttt{scripts/validate\_evidence.py} + \texttt{tests/test\_evidence.py} enforce integrity.

@@ -280,6 +280,20 @@
       "experiment_id": "EXP_DP1A_QUINTILE",
       "artifact": "results/dp1a_quintile.csv",
       "status": "observed"
+    },
+    "historically_listed_stocks": {
+      "value": 5511,
+      "unit": "count",
+      "experiment_id": "EXP_DATASET",
+      "artifact": "RQAlpha bundle metadata",
+      "status": "observed"
+    },
+    "oos_months": {
+      "value": 96,
+      "unit": "months",
+      "experiment_id": "EXP_BASELINE_V43",
+      "artifact": "results/baseline_v43_summary.csv",
+      "status": "observed"
     }
   },
   "collapses": [

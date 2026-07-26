@@ -63,7 +63,7 @@ Each test evaluated against pre-registered gates with no post-hoc changes.
 # ============================================================
 ws('04_data_and_methodology.tex', f"""\\section{{Data and Methodology}}
 \\subsection{{Data}}
-RQAlpha A-share daily market-data bundle, {raw("frozen_baseline_nw_t6")[:-2] if False else "5,511"} historically listed stocks. Point-in-time universe without survivorship filters. Daily OHLCV aggregated to monthly. True PIT fundamental data (market cap, book value, earnings, industry) was unavailable.
+RQAlpha A-share daily market-data bundle, {raw("historically_listed_stocks")} historically listed stocks. Point-in-time universe without survivorship filters. Daily OHLCV aggregated to monthly. True PIT fundamental data (market cap, book value, earnings, industry) was unavailable.
 
 \\subsection{{Features}}
 20 ranked technical indicators: momentum (5/10/20/60/120-day), volatility (5/20/60-day), volume (5/20-day turnover), MA deviation (20/60-day), channel position, RSI(14), turnover, reversal (1/5-day), cross-sectional rank, skewness, breadth. All rank-normalized to $[-1,1]$ per month.

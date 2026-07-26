@@ -11,9 +11,9 @@ Table~\ref{tab:portfolio} presents the primary portfolio outcomes under the base
 \toprule
 \textbf{Portfolio} & \textbf{Net Annual} & \textbf{Sharpe} & \textbf{Max DD} & \textbf{Excess} \\
 \midrule
-U100 RAW (base31) & +\UFullNet & 0.31 & 46.3\% & +\UFullNet \\
-U50 RESID (base31) & $-\ULiquidLoss$ & $-0.04$ & \MaxDrawdownPct & +4.9\% \\
-U50 EW benchmark & $-5.9\%$ & $-0.26$ & --- & --- \\
+U100 RAW (base31) & +6.8 & 0.31 & 46.3\% & +6.8 \\
+U50 RESID (base31) & -0.9 & $-0.04$ & +61.3 & +4.9\% \\
+U50 EW benchmark & -5.9 & $-0.26$ & --- & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -21,17 +21,7 @@ U50 EW benchmark & $-5.9\%$ & $-0.26$ & --- & --- \\
 The U100 portfolio achieved positive net returns but with extreme concentration in low-liquidity stocks. The U50 portfolio---the pre-registered primary execution universe---failed to produce positive absolute returns, despite generating positive benchmark-relative excess.
 
 \subsection{The Excess-Return Trap}
-A common error in strategy evaluation is to report only benchmark-relative excess. Table~\ref{tab:portfolio} illustrates the problem: U50 RESID generates +4.9\% annual excess over a declining benchmark, but an investor allocating capital to the strategy would still lose money in absolute terms.
-
-Positive excess over a poor benchmark is not evidence of investment skill. The correct comparison is between the strategy's absolute return and the investor's opportunity cost (risk-free rate plus appropriate risk premium). An equity strategy that returns \ULiquidLoss{} annually while the risk-free rate is positive destroys value, regardless of how the benchmark performs.
+Table~\ref{tab:portfolio} illustrates the problem: U50 RESID generates +4.9\% annual excess over a declining benchmark of -5.9, but an investor allocating capital to the strategy would still lose money in absolute terms.
 
 \subsection{Cost Analysis}
-Transaction costs accounted for approximately 4.2 percentage points of annual return drag in the U50 portfolio. The primary cost drivers were:
-
-\begin{itemize}[leftmargin=*,nosep]
-    \item \textbf{Turnover:} Monthly one-way turnover of approximately 53\% in U50 and 51\% in U100, consistent with a 90/80 band applied to a volatile ranking signal.
-    \item \textbf{Stamp tax:} 5bp on all sells (the largest single cost component at roughly 3.2\% p.a.).
-    \item \textbf{Commission and slippage:} Combined 6bp per round trip (approximately 1.0\% p.a.).
-\end{itemize}
-
-Cost reduction through wider bands would reduce turnover but at the expense of signal decay---stocks that drop in rank would be held longer, diluting the active return. The cost-turnover trade-off was not optimized because the gross signal in the liquid universe was insufficient to justify further tuning.
+Transaction costs accounted for approximately 4.2 percentage points of annual return drag. The primary cost drivers were stamp tax (5bp on all sells, roughly 3.2\% p.a.) and commission plus slippage (6bp per round trip, approximately 1.0\% p.a.).

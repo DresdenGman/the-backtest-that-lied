@@ -1,24 +1,12 @@
 \section{Conclusion}
 
-This project tested whether daily OHLCV data could produce a statistically valid, economically executable, and scalable A-share trading strategy. The answer, after 200+ model fits across six experimental phases, is no---with an important qualification.
+Daily OHLCV features contain genuine cross-sectional ranking information. The frozen baseline retained a mean out-of-sample IC of 0.108 with Newey--West $t = 10.5$. Within the lowest-liquidity quintile, the model demonstrated real stock-selection ability (+2.7 monthly excess).
 
-Daily OHLCV features contain genuine cross-sectional ranking information. The frozen baseline retained a mean out-of-sample IC of \BaselineIC{} with strong time-aware inference (Newey--West $t = \NeweyWestT$, bootstrap CI excludes zero). Within the lowest-liquidity quintile, the model demonstrated real stock-selection ability (\QOneExcessPct{} monthly excess). These are not null results.
+However, this ranking information did not survive the transition to executable, cost-aware, liquidity-filtered portfolios. In the liquid U50 and U30 universes, the strategy produced negative absolute returns (-0.9 net annual). Longer prediction horizons did not solve the concentration problem.
 
-However, this ranking information did not survive the transition to executable, cost-aware, liquidity-filtered portfolios. In the liquid U50 and U30 universes---where trades can actually be executed at scale---the strategy produced negative absolute returns. Longer prediction horizons did not solve the concentration problem. Residualization improved liquid-universe performance marginally but could not bridge the gap to profitability.
-
-The OHLCV-only hypothesis was therefore terminated as a scalable core strategy. A frozen Q1 research sleeve is maintained for forward observation only, with no further historical optimization.
-
-The project's contribution is not a trading signal. It is a demonstration that:
-
-\begin{enumerate}[label=(\arabic*),leftmargin=*]
-    \item Clean negative results are more valuable than profitable-looking lies.
-    \item Statistical predictability and economic investability are fundamentally different properties.
-    \item A research system designed to prove you wrong is more useful than one designed to confirm what you hope is true.
-    \item Rejecting a favored hypothesis is not failure---it is the correct outcome of honest inquiry.
-\end{enumerate}
+The project's contribution is not a trading signal. It is a demonstration that clean negative results are more valuable than profitable-looking lies; that statistical predictability and economic investability are fundamentally different properties; and that rejecting a favored hypothesis is the correct outcome of honest inquiry.
 
 \vspace{1em}
 \begin{center}
-\textit{The most valuable output of this project was not a trading signal. \\
-It was a research system capable of proving me wrong.}
+\textit{The most valuable output of this project was not a trading signal. It was a research system capable of proving me wrong.}
 \end{center}

@@ -1,23 +1,17 @@
 \section{Residual and Horizon Tests}
 
-Two controlled experiments were conducted to test whether the core problem---signal concentration in illiquid stocks---could be mitigated without introducing new data sources.
-
 \subsection{Cross-Fitted Residual Target (RESID)}
 
-The RESID experiment followed the methodology of Gu, Kelly, and Xiu (2020): instead of predicting raw forward returns, the model was trained to predict the residual from a cross-sectional regression of returns on four Chinese equity factors (market, size, value, turnover). The factors were constructed using cross-fitting to eliminate own-stock contamination.
+The RESID experiment followed Gu, Kelly, and Xiu (2020): instead of predicting raw forward returns, the model was trained to predict the residual from a cross-sectional regression on four Chinese equity factors.
 
-\textbf{Results:} Residualization produced a modest improvement in the liquid U50 universe: U50 RESID net annual return improved from the RAW-H1 baseline. The low-liquidity concentration decreased directionally but remained substantial. The improvement was insufficient to cross the profitability gate: U50 RESID remained negative in absolute terms, and maximum drawdown remained above the 25\% threshold.
+\textbf{Results:} Residualization produced a modest improvement in the liquid U50 universe. However, the improvement was insufficient to cross the profitability gate: U50 RESID remained negative in absolute terms at -0.9, and maximum drawdown remained at +61.3---above the 25\% threshold.
 
-\textbf{Conclusion:} Residualization is retained as a cleaner research baseline but rejected as a strategy fix. The mild improvement confirms that some of the raw return variation is factor-driven, but removing this component does not substantially change the investability picture.
+\textbf{Conclusion:} Residualization is retained as a cleaner research baseline but rejected as a strategy fix.
 
 \subsection{Multi-Horizon Targets (H3 and H6)}
 
-The multi-horizon experiment tested whether training on 3-month and 6-month cumulative returns could shift the signal into more liquid stocks. Leippold, Wang, and Zhou (2022) report that larger Chinese stocks show stronger predictability at longer horizons, motivating this test.
+The multi-horizon experiment tested whether training on 3-month and 6-month cumulative returns could shift the signal into more liquid stocks.
 
-\textbf{Methodology:} Models were trained using 3-month ($R^{3m}_t = \prod_{k=1}^{3}(1+r_{t+k})-1$) and 6-month cumulative forward returns as targets. Training windows were purged (3 months for H3, 6 months for H6) to prevent overlap between training and validation return windows. The identical 20-seed ensemble, 3-fold structure, and executable portfolio engine were used.
+\textbf{Results:} Neither horizon produced positive U50 net returns. H3 U50 returned -21.7 annually; H6 U50 returned -15.2 annually. Turnover was lower at longer horizons but the gross signal was insufficient.
 
-\textbf{Important note:} An earlier version of the multi-horizon experiment (MH-1) contained a portfolio construction defect that produced invalid results with drawdowns exceeding 100\% (impossible for unlevered long-only portfolios). The defect was a capital-allocation error in the staggered cohort engine that caused each cohort to receive full capital rather than its proportional budget. The corrected experiment (MH-1R) used the proven monthly 90/80 rebalancing engine and produced the results reported here. The erroneous first results are preserved in the experiment ledger for methodological transparency.
-
-\textbf{Results:} Neither horizon produced positive U50 net returns. H3 U50 returned \HorizonThreeLoss{} annually; H6 U50 returned \HorizonSixLoss{} annually. Turnover was lower at longer horizons (24--31\% for H6 vs.\ 53\% for H1), but the gross signal was insufficient regardless.
-
-\textbf{Conclusion:} Multi-horizon targeting does not rescue OHLCV-only scalability. The liquidity-concentration problem is not a horizon artifact---it is a fundamental property of price-volume data in the tested sample.
+\textbf{Conclusion:} Multi-horizon targeting does not rescue OHLCV-only scalability.

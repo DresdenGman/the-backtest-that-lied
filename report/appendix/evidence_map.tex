@@ -1,15 +1,13 @@
 \section{Evidence Map}
-
-Key evidence metrics with experiment IDs and artifact paths:
+Key evidence metrics:
 
 \begin{itemize}
-    \item \texttt{target\_leak\_before\_ic} $\rightarrow$ EXP\_TARGET\_SHIFT\_01 $\rightarrow$ \texttt{results/target\_shift\_audit.csv}
-    \item \texttt{frozen\_baseline\_mean\_ic} $\rightarrow$ EXP\_BASELINE\_V43 $\rightarrow$ \texttt{results/baseline\_v43\_summary.csv}
-    \item \texttt{u100\_raw\_net\_annual} $\rightarrow$ EXP\_DP1\_PORTFOLIO $\rightarrow$ \texttt{results/dp1\_portfolio\_summary.csv}
-    \item \texttt{u50\_resid\_net\_annual} $\rightarrow$ EXP\_STEP5\_ABLATION $\rightarrow$ \texttt{results/step5\_comparison.csv}
-    \item \texttt{q1\_within\_excess} $\rightarrow$ EXP\_DP1A\_QUINTILE $\rightarrow$ \texttt{results/dp1a\_quintile.csv}
-    \item \texttt{iid\_null\_mean\_ic} $\rightarrow$ EXP\_NULL\_IID\_01 $\rightarrow$ \texttt{results/stage1\_null\_results.csv}
-    \item \texttt{h3\_u50\_net\_annual} $\rightarrow$ EXP\_MH1R\_HORIZON $\rightarrow$ \texttt{results/mh1r.csv}
+    \item \texttt{target\_leak\_before\_ic}: IC 0.940 → \texttt{EXP\_TARGET\_SHIFT\_01} → \texttt{results/target\_shift\_audit.csv}
+    \item \texttt{target\_leak\_after\_ic}: IC 0.100 → \texttt{EXP\_TARGET\_SHIFT\_01} → \texttt{results/target\_shift\_audit.csv}
+    \item \texttt{frozen\_baseline\_mean\_ic}: IC 0.108 → \texttt{EXP\_BASELINE\_V43} → \texttt{results/baseline\_v43\_summary.csv}
+    \item \texttt{u100\_raw\_net\_annual}: +6.8 → \texttt{EXP\_DP1\_PORTFOLIO} → \texttt{results/dp1\_portfolio\_summary.csv}
+    \item \texttt{u50\_resid\_net\_annual}: -0.9 → \texttt{EXP\_STEP5\_ABLATION} → \texttt{results/step5\_comparison.csv}
+    \item \texttt{q1\_within\_excess}: +2.7 → \texttt{EXP\_DP1A\_QUINTILE} → \texttt{results/dp1a\_quintile.csv}
+    \item \texttt{iid\_null\_mean\_ic}: -0.005 → \texttt{EXP\_NULL\_IID\_01} → \texttt{results/stage1\_null\_results.csv}
+    \item \texttt{h3\_u50\_net\_annual}: -21.7 → \texttt{EXP\_MH1R\_HORIZON} → \texttt{results/mh1r.csv}
 \end{itemize}
-
-\noindent All metrics are validated by \texttt{scripts/validate\_evidence.py} and \texttt{tests/test\_evidence.py}.

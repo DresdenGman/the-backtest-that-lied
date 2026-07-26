@@ -16,3 +16,9 @@ results/
 notebooks/
 node_modules/
 dist/
+
+report/main.aux
+report/main.out
+report/main.pdf
+report/main.log
+report/main.toc

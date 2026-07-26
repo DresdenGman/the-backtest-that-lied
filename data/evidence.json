@@ -4,7 +4,7 @@
     "subtitle": "How I Built, Broke, and Rejected an A-Share Machine-Learning Strategy",
     "author": "BRS Student Researcher",
     "date": "2026-07",
-    "repository": "https://github.com/a24300/the-backtest-that-lied"
+    "repository": "https://github.com/DresdenGman/the-backtest-that-lied"
   },
   "metrics": {
     "target_leak_before_ic": {
@@ -254,7 +254,7 @@
       "stage": "V2",
       "belief": "There may be data leakage.",
       "evidence": "Date-shift scan: IC peak at k=0, not k=+1. Cross-fitting: IC 0.76→0.12.",
-      "updated": "84% of apparent alpha was mechanical. Rebuild pipeline."
+      "updated": "89% of apparent alpha was mechanical. Rebuild pipeline."
     },
     {
       "stage": "V3",

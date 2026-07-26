@@ -1,14 +1,12 @@
 \section{Experiment Ledger}
 
-Chronological research milestones:
-
 \begin{enumerate}
-    \item \textbf{Target Timing Audit} (EXP\_TARGET\_SHIFT\_01): Discovered contemporaneous target leakage. IC \InitialIC{} $\to$ \CorrectedIC. \invalid{Invalid.}
-    \item \textbf{Cross-Fit Audit} (EXP\_CROSSFIT\_01): Own-stock factor contamination detected. IC 0.76 $\to$ 0.12. \invalid{Invalid.}
-    \item \textbf{Frozen Baseline} (EXP\_BASELINE\_V43): Clean pipeline, PIT universe, rank normalization. Mean OOS IC \BaselineIC, NW $t = \NeweyWestT$. \valid{Validated.}
-    \item \textbf{Null Infrastructure} (EXP\_NULL\_IID\_01, EXP\_NULL\_PERM\_01): iid null IC $\approx$ 0, permutation audit correlation $\approx$ 0. \valid{Validated.}
-    \item \textbf{Portfolio Diagnostics} (EXP\_DP1\_PORTFOLIO, EXP\_DP1A\_QUINTILE): U100 +\UFullNet, U50 $-\ULiquidLoss$, Q1 holds \QOneHoldingsPct. \warn{Observed---Q1-driven.}
-    \item \textbf{Residual Ablation} (EXP\_STEP5\_ABLATION): RESID improves U50 $\sim$1.2pp but cannot reach profitability. \invalid{Rejected.}
-    \item \textbf{Multi-Horizon} (EXP\_MH1R\_HORIZON): H3 $-\HorizonThreeLoss$, H6 $-\HorizonSixLoss$ U50 net. \invalid{Rejected.}
-    \item \textbf{Final Decision}: OHLCV-only core strategy terminated. Q1 preserved as frozen research sleeve. \valid{Recorded.}
+    \item \textbf{Target Timing}: IC 0.940 $\to$ 0.100 (89\% collapse). \texttt{EXP\_TARGET\_SHIFT\_01}. \textbf{Invalid → Validated.}
+    \item \textbf{Cross-Fit Audit}: IC 0.76 $\to$ 0.12. \texttt{EXP\_CROSSFIT\_01}. \textbf{Invalid → Validated.}
+    \item \textbf{Frozen Baseline}: Mean OOS IC 0.108, NW $t = 10.5$. \texttt{EXP\_BASELINE\_V43}. \textbf{Validated.}
+    \item \textbf{Null Infrastructure}: iid null IC $\approx$ 0, permutation correlation $\approx$ 0. \texttt{EXP\_NULL\_IID\_01}, \texttt{EXP\_NULL\_PERM\_01}. \textbf{Validated.}
+    \item \textbf{Portfolio Diagnostics}: U100 +6.8, U50 -0.9, Q1 holds +48.1. \texttt{EXP\_DP1\_PORTFOLIO}. \textbf{Q1-driven.}
+    \item \textbf{Residual Ablation}: RESID improves marginally, cannot reach profitability. \texttt{EXP\_STEP5\_ABLATION}. \textbf{Rejected.}
+    \item \textbf{Multi-Horizon}: H3 -21.7, H6 -15.2 U50 net. \texttt{EXP\_MH1R\_HORIZON}. \textbf{Rejected.}
+    \item \textbf{Termination}: OHLCV-only core strategy closed. Q1 preserved as frozen research sleeve. \textbf{Recorded.}
 \end{enumerate}

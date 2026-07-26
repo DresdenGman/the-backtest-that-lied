@@ -1,8 +1,7 @@
 \section{Liquidity Attribution}
 
 \subsection{ADV20 Quintile Decomposition}
-
-To determine where the model's predictive ability was concentrated, all predicted stocks were assigned to quintiles based on their 20-day average daily trading volume (ADV20). The quintile boundaries were computed globally across the full sample period.
+To determine where the model's predictive ability was concentrated, all predicted stocks were assigned to quintiles based on their 20-day average daily trading volume (ADV20).
 
 \begin{table}[htbp]
 \centering
@@ -12,7 +11,7 @@ To determine where the model's predictive ability was concentrated, all predicte
 \toprule
 \textbf{Quintile} & \textbf{Median ADV (M\textyen)} & \textbf{Holdings Share} & \textbf{Net Annual} \\
 \midrule
-Q1 (lowest ADV)  & 19  & \QOneHoldingsPct{}  & +10.4\% \\
+Q1 (lowest ADV)  & 19  & +48.1  & +10.4\% \\
 Q2               & 41  & 25.8\% & +3.9\%  \\
 Q3               & 75  & 14.0\% & -0.6\%  \\
 Q4               & 145 & 7.8\%  & -3.5\%  \\
@@ -22,15 +21,12 @@ Q5 (highest ADV) & 386 & 4.2\%  & -2.6\%  \\
 \end{table}
 
 \subsection{Within-Quintile Selection}
-The model demonstrated genuine stock-selection ability within the lowest-liquidity quintile: Q1 holdings outperformed the Q1 equal-weight benchmark by \QOneExcessPct{} per month. This excess is not explainable by the size, value, or momentum factors because those factors capture \textit{between}-quintile variation; within-quintile excess represents stock-specific selection.
+The model demonstrated genuine stock-selection ability within the lowest-liquidity quintile: Q1 holdings outperformed the Q1 equal-weight benchmark by +2.7 per month.
 
-The within-quintile excess decays monotonically across quintiles:
-Q2 excess was negative ($-2.8\%$ monthly), indicating the model selected the \textit{wrong} stocks in the middle-liquidity range. Q3--Q5 showed weak or negative selection effects.
+The within-quintile excess decays monotonically across quintiles: Q2 excess was negative ($-2.8\%$ monthly).
 
 \subsection{Interpretation}
-The signal behaves as a low-liquidity stock selector. This is consistent with findings by Leippold, Wang, and Zhou (2022), who document that short-horizon machine-learning predictability in Chinese equities is strongest among the smallest, least liquid stocks. The finding does not, however, constitute a ``size effect'' in the Fama-French sense, because true point-in-time market capitalization was unavailable. The ADV20-based finding should be interpreted as a liquidity effect, not a size-factor finding.
+The signal behaves as a low-liquidity stock selector. This is consistent with Leippold, Wang, and Zhou (2022), who document that short-horizon machine-learning predictability in Chinese equities is strongest among the lowest-liquidity stocks. The ADV20-based finding should be interpreted as a liquidity effect, not a size-factor finding (true point-in-time market capitalization was unavailable).
 
 \subsection{Scalability Barrier}
-The concentration in Q1 creates a fundamental capacity constraint. With median daily turnover of \textyen 19M per stock and a typical position of 1--2\% of ADV20, the strategy could deploy approximately \textyen 5--10M before market impact became material. This is a research-level capacity, not an institutional investment capacity.
-
-The strategy's dependence on the lowest-liquidity segment also means that returns are subject to execution risk: the stocks most critical to performance are precisely those where trading costs are highest and price impact is most severe. The cost model used here (flat 31bp round-trip) likely underestimates true costs in Q1, meaning the reported net returns for the full-universe portfolio are upper bounds rather than achievable outcomes.
+The concentration in Q1 creates a fundamental capacity constraint. With median daily turnover of \textyen 19M per stock, the strategy could deploy approximately \textyen 5--10M before market impact became material.

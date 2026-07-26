@@ -3,10 +3,10 @@ title: The Backtest That Lied
 message: If you use this research methodology, please cite it as described below.
 type: software
 version: 1.0.0
-date-released: forthcoming
+date-released: 2026-07-26
 authors:
   - name: BRS Student Researcher
-repository-code: https://github.com/a24300/the-backtest-that-lied
+repository-code: https://github.com/DresdenGman/the-backtest-that-lied
 abstract: An evidence-driven forensic investigation into why a near-perfect A-share machine-learning prediction signal collapsed under rigorous validation — and what the process of honestly rejecting a strategy teaches about research methodology.
 keywords:
   - quantitative finance

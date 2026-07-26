@@ -20,7 +20,7 @@ Statistical predictability and economic investability are different things — a
 
 ## Live Demo
 
-*Repository forthcoming*
+[Live Demo](https://dresdengman.github.io/the-backtest-that-lied)
 
 ## Repository Structure
 
@@ -57,7 +57,7 @@ the-backtest-that-lied/
 ## Reproduce Locally
 
 ```bash
-git clone https://github.com/a24300/the-backtest-that-lied.git
+git clone https://github.com/DresdenGman/the-backtest-that-lied.git
 cd the-backtest-that-lied
 python scripts/serve.py
 # Open http://127.0.0.1:8000

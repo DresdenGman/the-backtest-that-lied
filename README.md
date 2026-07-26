@@ -2,7 +2,7 @@
 
 **How I built, broke, and rejected an A-share machine-learning strategy — and what I learned by killing my own best result.**
 
-A BRS high-school research project demonstrating that clean negative results are more valuable than profitable-looking lies.
+A research project demonstrating that clean negative results are more valuable than profitable-looking lies.
 
 ## Central Conclusion
 

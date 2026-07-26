@@ -182,6 +182,104 @@
       "experiment_id": "EXP_DP1_PORTFOLIO",
       "artifact": "results/dp1_portfolio_summary.csv",
       "status": "benchmark"
+    },
+    "q1_median_adv_m": {
+      "value": 19,
+      "unit": "M CNY",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q2_median_adv_m": {
+      "value": 41,
+      "unit": "M CNY",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q3_median_adv_m": {
+      "value": 75,
+      "unit": "M CNY",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q4_median_adv_m": {
+      "value": 145,
+      "unit": "M CNY",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q5_median_adv_m": {
+      "value": 386,
+      "unit": "M CNY",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q2_share_of_u100_holdings": {
+      "value": 0.258,
+      "unit": "fraction of holdings",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q3_share_of_u100_holdings": {
+      "value": 0.14,
+      "unit": "fraction of holdings",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q4_share_of_u100_holdings": {
+      "value": 0.078,
+      "unit": "fraction of holdings",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q5_share_of_u100_holdings": {
+      "value": 0.042,
+      "unit": "fraction of holdings",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q1_net_annual": {
+      "value": 0.104,
+      "unit": "net annual return",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q2_net_annual": {
+      "value": 0.039,
+      "unit": "net annual return",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q3_net_annual": {
+      "value": -0.006,
+      "unit": "net annual return",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q4_net_annual": {
+      "value": -0.035,
+      "unit": "net annual return",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
+    },
+    "q5_net_annual": {
+      "value": -0.026,
+      "unit": "net annual return",
+      "experiment_id": "EXP_DP1A_QUINTILE",
+      "artifact": "results/dp1a_quintile.csv",
+      "status": "observed"
     }
   },
   "collapses": [

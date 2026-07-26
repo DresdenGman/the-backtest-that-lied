@@ -1,14 +1,19 @@
 \section{The Signal Was Real. The Strategy Was Not.}
 \begin{table}[htbp]\centering
 \caption{Decision gates.}\label{tab:gates}
-\begin{tabular}{lcc}\toprule
-\textbf{Criterion} & \textbf{Result} & \textbf{Gate} \\midrule
-Predictive ranking & Passed & IC $> 0$, NW $t > 2$ \\
+\begin{tabular}{lcc}
+\toprule
+\textbf{Criterion} & \textbf{Result} & \textbf{Gate} \\
+\midrule
+Predictive ranking & Passed & IC $>0$, NW $t>2$ \\
 Time-aware significance & Passed & Bootstrap CI excludes 0 \\
-Within-Q1 selection & Passed & Excess $> 0$ \\
-Positive U50 return & Failed & Net $< 0$ \\
-Acceptable drawdown & Failed & DD $> 25\%$ \\
-Scalable capacity & Failed & Q1 holds +48.1\% \\midrule
-\textbf{Decision} & \textbf{TERMINATED} & OHLCV branch closed \\bottomrule
-\end{tabular}\end{table}
+Within-Q1 selection & Passed & Excess $>0$ \\
+Positive U50 return & Failed & Net $<0$ \\
+Acceptable drawdown & Failed & DD $>25\%$ \\
+Liquid-universe scalability & Failed & U50/U30 negative \\
+\midrule
+\textbf{Decision} & \textbf{TERMINATED} & OHLCV branch closed \\
+\bottomrule
+\end{tabular}
+\end{table}
 Frozen baseline: IC 0.108, NW $t = 10.5$. Pre-registered gates prevented post-hoc optimization. Termination was the only honest decision.

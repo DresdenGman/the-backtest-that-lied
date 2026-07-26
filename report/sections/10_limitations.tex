@@ -1,25 +1,12 @@
 \section{Limitations}
-
-The following limitations apply to all claims in this report:
-
 \begin{enumerate}[label=(\arabic*),leftmargin=*]
-    \item \textbf{Data scope:} Only daily OHLCV data was available. True point-in-time fundamental data (market capitalization, book value, earnings, accruals, industry classification, analyst forecasts) was not accessible during the research period. The conclusion that OHLCV-only cannot produce a scalable strategy does not extend to strategies incorporating economically independent data sources.
-
-    \item \textbf{Unavailable market capitalization:} The ADV20-based liquidity findings should not be interpreted as size-effect findings. Without point-in-time market capitalization, it is not possible to distinguish between a liquidity effect and a true size effect.
-
-    \item \textbf{No industry classification:} Industry membership---a standard control in asset pricing tests---was unavailable. Industry-neutral rankings could not be tested.
-
-    \item \textbf{Non-redistributable data:} The RQAlpha market-data bundle is proprietary and not included in the project repository. This limits end-to-end reproducibility from raw data. The \texttt{data/evidence.json} file serves as the authoritative publication layer, providing all validated results with full provenance.
-
-    \item \textbf{Sample consumption:} The 2022--2024 period was used as the third validation fold. A genuinely unseen forward test would require data from July 2026 onward. The consumed sample cannot be reused for further hypothesis testing without inflating Type I error rates.
-
-    \item \textbf{Cost model:} Flat per-trade cost assumptions were used. In practice, costs vary with trade size, market conditions, and stock liquidity. The 31bp base scenario likely underestimates true costs in the lowest-liquidity quintile, meaning reported Q1 returns are upper bounds.
-
-    \item \textbf{Model family:} Only LightGBM was tested. Other model classes (neural networks, random forests, linear models with interaction terms) might extract different information from the same features. However, given the feature family's fundamental limitation (OHLCV only), a model-class change was not expected to address the core problem.
-
-    \item \textbf{Factor breadth:} Only 20 technical factors were used. Factor discovery algorithms, alternative technical indicators, or order-book features were not explored. However, the project's conclusion is about the information content of OHLCV data generally, not about a specific factor set.
-
-    \item \textbf{No capacity model:} A formal market-impact model was not constructed. Capacity estimates are based on ADV20 quintile boundaries and should be treated as approximate.
-
-    \item \textbf{Survivorship treatment:} The PIT universe included delisted stocks, but delisting returns were not explicitly modeled. Stocks that delisted during a holding period were treated as total losses, which is conservative.
+    \item \textbf{Data scope:} Only daily OHLCV. No PIT fundamental data (market cap, book value, earnings, industry).
+    \item \textbf{No market cap:} ADV20 findings are liquidity effects, not size effects. PIT market cap unavailable.
+    \item \textbf{Non-redistributable data:} RQAlpha bundle is proprietary. \texttt{evidence.json} is the authoritative publication layer.
+    \item \textbf{Sample consumption:} 2022--2024 used as validation; genuine forward test requires post-July 2026 data.
+    \item \textbf{Cost model:} Flat per-trade costs. True Q1 costs likely higher.
+    \item \textbf{Model family:} Only LightGBM tested. Other models may extract different information.
+    \item \textbf{Factor breadth:} 20 technical factors only. No factor discovery or alternative data.
+    \item \textbf{No capacity model:} Formal market-impact model not constructed. Capacity estimates approximate.
+    \item \textbf{Survivorship:} PIT universe includes delisted stocks; delisting returns not explicitly modeled.
 \end{enumerate}

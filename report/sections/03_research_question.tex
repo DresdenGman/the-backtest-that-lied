@@ -1,17 +1,11 @@
 \section{Research Question}
+The primary research question:
+\begin{quote}\textit{Can daily OHLCV data produce a statistically valid, economically executable, and scalable A-share trading strategy?}\end{quote}
 
-The primary research question is:
-
-\begin{quote}
-\textit{Can daily OHLCV data produce a statistically valid, economically executable, and scalable A-share trading strategy?}
-\end{quote}
-
-This question decomposes into three hierarchical tests:
-
+Three hierarchical tests:
 \begin{enumerate}[label=\textbf{T\arabic*:},leftmargin=*]
-    \item \textbf{Is the predictive signal real?} --- Can cross-sectional return rankings be predicted out-of-sample with statistical significance, after correcting for known data leakages (survivorship bias, look-ahead bias, own-stock contamination, calendar encoding)?
-    \item \textbf{Can the signal survive execution and costs?} --- When translated into an executable portfolio with next-open timing, realistic buy/sell costs, and a 90/80 no-trade band, does the signal produce positive absolute returns?
-    \item \textbf{Can the signal survive liquidity and capacity constraints?} --- Does the strategy work in tradable universes (top 50\% and top 30\% by ADV20), or is performance dependent on stocks too illiquid to trade at meaningful scale?
+    \item \textbf{Is the predictive signal real?} --- Cross-sectional rank IC out-of-sample, after all leak corrections.
+    \item \textbf{Can the signal survive execution and costs?} --- Next-open execution, realistic costs, 90/80 buffer, absolute returns.
+    \item \textbf{Can the signal survive liquidity and capacity?} --- U50/U30 vs full universe, ADV20 quintile decomposition.
 \end{enumerate}
-
-Each test was evaluated against pre-registered gates. No gate was changed after seeing results. Experiments that failed a gate were classified as rejected; the hypothesis branch was terminated when all rescue attempts (residualization, multi-horizon targeting) failed the same gates.
+Each test evaluated against pre-registered gates with no post-hoc changes.

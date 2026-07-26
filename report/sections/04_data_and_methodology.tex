@@ -1,108 +1,21 @@
 \section{Data and Methodology}
-
 \subsection{Data}
-The research used the RQAlpha A-share daily market-data bundle, covering 5,511 historically listed stocks. A point-in-time (PIT) universe was constructed without survivorship filters, resulting in 4,073 stocks appearing across the full sample period. Daily OHLCV data was aggregated to monthly frequency.
+RQAlpha A-share daily market-data bundle, 5,511 historically listed stocks. Point-in-time universe without survivorship filters. Daily OHLCV aggregated to monthly. True PIT fundamental data (market cap, book value, earnings, industry) was unavailable.
 
-\textbf{Important:} True point-in-time fundamental data (market capitalization, book value, earnings, industry classification) was unavailable. All analysis was conducted using price and volume data only. This limitation is fundamental to the project's conclusion.
-
-\subsection{Feature Set}
-Twenty ranked technical indicators were computed at monthly frequency:
-
-\begin{itemize}[leftmargin=*,nosep]
-    \item \textbf{Momentum:} 5-, 10-, 20-, 60-, and 120-day returns (M5, M10, M20, M60, M120)
-    \item \textbf{Volatility:} 5-, 20-, and 60-day standard deviation of returns (S5, S20, S60)
-    \item \textbf{Volume:} 5- and 20-day average turnover ratios (V5, V20)
-    \item \textbf{Moving Average:} 20- and 60-day MA deviation (MA20, MA60)
-    \item \textbf{Channel Position:} Position within 20-day high-low range (POS)
-    \item \textbf{RSI:} 14-day relative strength index (RSI)
-    \item \textbf{Turnover:} Current and 5-day average turnover (TN, TN5)
-    \item \textbf{Reversal:} 1- and 5-day reversal (REV1, REV5)
-    \item \textbf{Cross-sectional:} 20-day cross-sectional rank (X20)
-    \item \textbf{Skewness:} 20-day return skewness (SK20)
-    \item \textbf{Breadth:} Number of advancing stocks over 20 days (N20)
-\end{itemize}
-
-All features underwent cross-sectional rank normalization to $[-1, 1]$ within each month. This normalization was recomputed separately for each validation month during training to prevent information leakage.
+\subsection{Features}
+20 ranked technical indicators: momentum (5/10/20/60/120-day), volatility (5/20/60-day), volume (5/20-day turnover), MA deviation (20/60-day), channel position, RSI(14), turnover, reversal (1/5-day), cross-sectional rank, skewness, breadth. All rank-normalized to $[-1,1]$ per month.
 
 \subsection{Model}
-LightGBM gradient-boosted trees were used with the following frozen hyperparameters:
+LightGBM: 200 trees, lr=0.02, depth=3, leaves=8, subsample=0.7, colsample=0.7, L1=1, L2=10. 20-seed ensemble. No hyperparameter tuning.
 
-\begin{center}
-\begin{tabular}{ll}
-\toprule
-\textbf{Parameter} & \textbf{Value} \\
-\midrule
-Number of estimators & 200 \\
-Learning rate & 0.02 \\
-Maximum depth & 3 \\
-Number of leaves & 8 \\
-Subsample fraction & 0.7 \\
-Column subsample & 0.7 \\
-L1 regularization ($\alpha$) & 1.0 \\
-L2 regularization ($\lambda$) & 10.0 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-A 20-seed ensemble (seeds 42--241) was used for each fold. No hyperparameter tuning was performed; the parameters were frozen before any results were observed.
-
-\subsection{Validation Protocol}
-Three temporally ordered walk-forward folds were used:
-
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Fold} & \textbf{Training} & \textbf{Validation} \\
-\midrule
-Fold 1 & 2010--2016 & 2017--2019 \\
-Fold 2 & 2013--2019 & 2020--2021 \\
-Fold 3 & 2015--2021 & 2022--2024 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\subsection{Inference}
-\begin{itemize}[leftmargin=*,nosep]
-    \item \textbf{Information Coefficient (IC):} Cross-sectional Spearman rank correlation between predicted and realized returns, computed monthly.
-    \item \textbf{ICIR:} Mean IC divided by standard deviation of IC.
-    \item \textbf{Newey--West:} Heteroskedasticity- and autocorrelation-consistent standard errors with 3 and 6 lags.
-    \item \textbf{Block Bootstrap:} 1,000 resamples with block length of 6 months, 95\% confidence intervals.
-\end{itemize}
-
-\subsection{Null Infrastructure}
-Three adversarial tests were applied to every specification:
-
-\begin{enumerate}[label=(\arabic*),leftmargin=*]
-    \item \textbf{iid Gaussian null:} Replace target returns with independent standard normal draws. Expected: IC $\approx 0$.
-    \item \textbf{Constant-label test:} Assign identical labels to all observations. Expected: standard deviation of predictions $\approx 0$.
-    \item \textbf{Permutation audit:} Shuffle labels across stocks within each month, retrain, check correlation with original predictions. Expected: $\approx 0$.
-\end{enumerate}
+\subsection{Validation}
+Three walk-forward folds: Fold 1 (2010-16$\to$2017-19), Fold 2 (2013-19$\to$2020-21), Fold 3 (2015-21$\to$2022-24).
+Inference: Spearman IC, Newey--West (lags 3,6), block bootstrap (1000 resamples, block 6 months).
+Null infrastructure: iid Gaussian null, constant-label test, permutation audit.
 
 \subsection{Portfolio Construction}
-Monthly rebalancing with 90/80 no-trade bands:
-
-\begin{itemize}[leftmargin=*,nosep]
-    \item At month-end: rank stocks by ensemble prediction.
-    \item Select top 10\% by rank percentile.
-    \item Enter at $\geq 90$th percentile; retain at $\geq 80$th percentile.
-    \item Execute at next trading-day open.
-    \item Equal weight within portfolio.
-\end{itemize}
-
-\subsection{Cost Scenarios}
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Scenario} & \textbf{Buy (bp)} & \textbf{Sell (bp)} \\
-\midrule
-Gross & 0 & 0 \\
-Base & 13 & 18 \\
-Stress & 22.5 & 27.5 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-Cost components: commission 0.03\%, stamp tax 0.05\%, slippage 0.1\%.
+Monthly rebalance, top 10\% by rank, enter $\ge$90th, retain $\ge$80th. Next-open execution. Equal weight.
+Cost scenarios: Gross (0bp), Base (13bp buy/18bp sell), Stress (22.5bp/27.5bp).
 
 \subsection{Evidence Architecture}
-All numerical claims in this report are generated from \texttt{data/evidence.json}, a machine-readable evidence layer containing 23 metrics, 3 collapse records, and full provenance information (experiment IDs, artifact paths, validation statuses). The \texttt{scripts/validate\_evidence.py} validator and \texttt{tests/test\_evidence.py} unit tests enforce structural integrity and reference resolution.
+All numerical claims generated from \texttt{data/evidence.json} (37 metrics, 3 collapses). \texttt{scripts/validate\_evidence.py} + \texttt{tests/test\_evidence.py} enforce integrity.

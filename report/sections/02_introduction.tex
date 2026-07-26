@@ -1,28 +1,11 @@
 \section{Introduction}
-
-\begin{quote}
-\textit{A model can predict returns and still fail as a strategy.}
-\end{quote}
-
-This project began with a straightforward question: can daily price and volume data---commonly called OHLCV---predict next-month A-share stock returns well enough to build a profitable trading strategy?
-
-The initial answer appeared to be an unambiguous yes. A gradient-boosted tree model trained on 20 technical indicators produced a rank information coefficient of 0.940{} across 96 consecutive out-of-sample months. Every single month was positive. The probability of this occurring by chance is approximately $2^{-96} \approx 10^{-29}$.
-
-But the result was wrong.
-
-Over six experimental phases spanning 200+ model fits, four distinct data leakages were discovered and corrected: contemporaneous target timing, own-stock factor contamination, survivorship bias from snapshot-based universe construction, and temporal encoding in raw feature levels. After all corrections, the apparent near-perfect predictive power collapsed by 89%{}---the retained signal was an order of magnitude smaller.
-
-What followed was not a story of failure, but of methodical investigation. A frozen research protocol was established: walk-forward validation on three independent folds, 20-seed ensemble averaging, cross-sectional rank normalization, and pre-registered decision gates that forbade post-hoc optimization. An adversarial null infrastructure was constructed---iid Gaussian noise tests, constant-label checks, and permutation audits---to ensure any remaining signal was genuine.
-
-The result of this investigation was a conclusion more nuanced than either ``it works'' or ``it doesn't work.''
-
+\begin{quote}\textit{A model can predict returns and still fail as a strategy.}\end{quote}
+The initial result: IC 0.940 across 96 consecutive OOS months collapsed by 89\% after four leakages.
+Retained signal: mean OOS IC 0.108, Newey--West $t = 10.5$.
 \begin{enumerate}[label=(\arabic*)]
-    \item \textbf{Cross-sectional predictability existed.} The retained IC of 0.108{} across 96 pooled out-of-sample months was statistically robust under Newey--West adjustment ($t = 10.5$) and block-bootstrap inference.
-    \item \textbf{The signal was concentrated in illiquid stocks.} ADV20 quintile decomposition revealed that +48.1{} of holdings resided in the lowest-liquidity quintile (median daily volume \textyen 19M). Within this quintile, genuine stock selection was demonstrated (+2.7{} monthly excess).
-    \item \textbf{Liquid universes remained unprofitable.} Executable next-open portfolios in the top 50\% and top 30\% by ADV20 produced negative absolute returns despite positive benchmark-relative excess.
-    \item \textbf{Longer horizons did not rescue scalability.} Three-month and six-month prediction targets, tested through the identical execution engine, produced negative liquid-universe returns (H3: -21.7, H6: -15.2{} net annual).
+    \item Cross-sectional predictability: IC 0.108 survived null infrastructure.
+    \item Signal concentrated in illiquid stocks: +48.1\% of holdings in Q1. Within-Q1: +2.7\% monthly excess.
+    \item Liquid universes unprofitable: U50 net -0.9\%, max DD +61.3\%.
+    \item Longer horizons failed: H3 -21.7\%, H6 -15.2\% net annual.
 \end{enumerate}
-
-On the basis of this evidence, the OHLCV-only core strategy was terminated. The branch was closed not because the model predicted nothing---it predicted something real---but because that something could not be converted into a scalable investable strategy under the constraints of real trading.
-
-This report documents the investigation, the evidence architecture, and the decision framework that led to this conclusion. It is offered not as a trading strategy, but as a case study in research methodology: how to build systems that can prove you wrong, and why knowing when to stop is itself a skill.
+The OHLCV-only strategy was terminated. Offered as a research methodology case study.

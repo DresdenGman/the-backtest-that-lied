@@ -225,7 +225,7 @@
       "after": {
         "description": "U50 net = −0.95%. 48% of U100 holdings in Q1 (median ADV ¥19M). Signal not scalable."
       },
-      "interpretation": "The model ranked stocks effectively, but the ranking heavily favored the least liquid quintile. In tradable universes, returns turned negative. Genuine alpha existed only in stocks too small to trade at meaningful scale.",
+      "interpretation": "The model ranked stocks effectively, but the ranking heavily favored the least liquid quintile. In tradable universes, returns turned negative. Genuine alpha existed only in stocks insufficiently liquid for scalable trading.",
       "rule_adopted": "Always report liquidity attribution. Scalability is a separate dimension from predictability."
     }
   ],

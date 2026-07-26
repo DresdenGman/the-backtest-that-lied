@@ -1,32 +1,12 @@
 \section{Liquidity Attribution}
-
-\subsection{ADV20 Quintile Decomposition}
-To determine where the model's predictive ability was concentrated, all predicted stocks were assigned to quintiles based on their 20-day average daily trading volume (ADV20).
-
-\begin{table}[htbp]
-\centering
-\caption{Liquidity quintile composition of the U100 portfolio.}
-\label{tab:quintile}
-\begin{tabular}{lccc}
-\toprule
-\textbf{Quintile} & \textbf{Median ADV (M\textyen)} & \textbf{Holdings Share} & \textbf{Net Annual} \\
-\midrule
-Q1 (lowest ADV)  & 19  & +48.1  & +10.4\% \\
-Q2               & 41  & 25.8\% & +3.9\%  \\
-Q3               & 75  & 14.0\% & -0.6\%  \\
-Q4               & 145 & 7.8\%  & -3.5\%  \\
-Q5 (highest ADV) & 386 & 4.2\%  & -2.6\%  \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Within-Quintile Selection}
-The model demonstrated genuine stock-selection ability within the lowest-liquidity quintile: Q1 holdings outperformed the Q1 equal-weight benchmark by +2.7 per month.
-
-The within-quintile excess decays monotonically across quintiles: Q2 excess was negative ($-2.8\%$ monthly).
-
-\subsection{Interpretation}
-The signal behaves as a low-liquidity stock selector. This is consistent with Leippold, Wang, and Zhou (2022), who document that short-horizon machine-learning predictability in Chinese equities is strongest among the lowest-liquidity stocks. The ADV20-based finding should be interpreted as a liquidity effect, not a size-factor finding (true point-in-time market capitalization was unavailable).
-
-\subsection{Scalability Barrier}
-The concentration in Q1 creates a fundamental capacity constraint. With median daily turnover of \textyen 19M per stock, the strategy could deploy approximately \textyen 5--10M before market impact became material.
+\begin{table}[htbp]\centering
+\caption{Liquidity quintile composition.}\label{tab:quintile}
+\begin{tabular}{lccc}\toprule
+\textbf{Quintile} & \textbf{Median ADV (M\textyen)} & \textbf{\% Holdings} & \textbf{Net Annual} \\midrule
+Q1 (lowest) & 19 & +48.1\% & +10.4\% \\
+Q2 & 41 & 25.8\% & +3.9\% \\
+Q3 & 75 & 14.0\% & -0.6\% \\
+Q4 & 145 & 7.8\% & -3.5\% \\
+Q5 (highest) & 386 & 4.2\% & -2.6\% \\bottomrule
+\end{tabular}\end{table}
+Within-Q1 selection: +2.7\% per month. The signal was concentrated in the lowest-liquidity stocks and was severely capacity-constrained. Maximum feasible capacity was not fully quantified.

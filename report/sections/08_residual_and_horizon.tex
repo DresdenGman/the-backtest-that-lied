@@ -1,17 +1,6 @@
 \section{Residual and Horizon Tests}
-
 \subsection{Cross-Fitted Residual Target (RESID)}
-
-The RESID experiment followed Gu, Kelly, and Xiu (2020): instead of predicting raw forward returns, the model was trained to predict the residual from a cross-sectional regression on four Chinese equity factors.
-
-\textbf{Results:} Residualization produced a modest improvement in the liquid U50 universe. However, the improvement was insufficient to cross the profitability gate: U50 RESID remained negative in absolute terms at -0.9, and maximum drawdown remained at +61.3---above the 25\% threshold.
-
-\textbf{Conclusion:} Residualization is retained as a cleaner research baseline but rejected as a strategy fix.
-
+Own-stock contamination audit: IC collapsed from 0.760 to 0.120 after cross-fitting.
+Residualization improved U50 marginally (net -0.9\%, DD +61.3\%) but could not reach profitability.
 \subsection{Multi-Horizon Targets (H3 and H6)}
-
-The multi-horizon experiment tested whether training on 3-month and 6-month cumulative returns could shift the signal into more liquid stocks.
-
-\textbf{Results:} Neither horizon produced positive U50 net returns. H3 U50 returned -21.7 annually; H6 U50 returned -15.2 annually. Turnover was lower at longer horizons but the gross signal was insufficient.
-
-\textbf{Conclusion:} Multi-horizon targeting does not rescue OHLCV-only scalability.
+H3 U50: -21.7\% annual. H6 U50: -15.2\% annual. Multi-horizon targeting does not rescue OHLCV-only scalability.

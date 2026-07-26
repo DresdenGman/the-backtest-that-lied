@@ -1,31 +1,16 @@
 \section{The Three Collapses}
-
-This section documents the three stages through which an apparently extraordinary result was progressively dismantled.
-
 \subsection{Collapse I: Statistical Illusion}
-
-\textbf{Initial belief:} A LightGBM model with 20 technical features could predict next-month cross-sectional A-share returns with a monthly rank IC of 0.940.
-
-\textbf{What was wrong:} The model was predicting the contemporaneous return, not the forward return. The target variable was misaligned: features at the end of month $t$ were being used to predict the return \textit{during} month $t$, not month $t+1$.
-
-\textbf{Detection:} A date-shift scan was performed, computing the IC at shift $k$ for $k \in \{-3,\dots,+3\}$. The IC peaked at $k = 0$ (contemporaneous) rather than $k = +1$ (forward).
-
-\textbf{Correction:} The target variable was shifted forward by one period. After correction, the IC collapsed from 0.940 to 0.100.
-
-\textbf{Interpretation:} 89\% of the apparent predictive power was a mechanical illusion created by predicting returns that had already occurred. The absolute decline was 0.84 IC points. The remaining signal, while real, was an order of magnitude smaller than the original result suggested.
+Initial belief: 20 factors + LightGBM could predict returns with IC 0.940.
+Detection: Date-shift scan peaked at $k=0$, not $k=+1$.
+Correction: IC collapsed 0.940 $\to$ 0.100.
+Interpretation: 89\% of apparent predictive power was mechanical illusion (absolute decline: 0.84 IC points).
 
 \subsection{Collapse II: Economic Implementation}
-
-\textbf{Initial belief:} A statistically significant IC of 0.108 should translate into positive portfolio returns.
-
-\textbf{Results:} When implemented as an executable next-open portfolio with realistic costs (31bp round-trip), the strategy in the top-50\%-by-ADV20 universe (U50) produced a net annual return of -0.9 with a maximum drawdown of +61.3. The benchmark (equal-weight U50) returned -5.9 annually.
-
-\textbf{Interpretation:} Positive excess over a declining benchmark is not sufficient. The absolute return matters for an investor who can choose between the strategy and a risk-free alternative.
+Initial belief: IC 0.108 should produce positive portfolio returns.
+Results: U50 executable (31bp costs): net -0.9\%, DD +61.3\%. Benchmark: -5.9\%.
+Interpretation: Statistical predictability $\neq$ economic investability.
 
 \subsection{Collapse III: Scalability}
-
-\textbf{Initial belief:} The strategy was profitable in the full universe (U100 net annual +6.8) and simply needed the right execution universe.
-
-\textbf{What was wrong:} The full-universe performance was concentrated overwhelmingly in the lowest-liquidity quintile. ADV20 quintile decomposition revealed that +48.1 of all holdings were in Q1 (median daily turnover \textyen 19M). Within Q1, genuine stock selection was demonstrated (+2.7 monthly excess over Q1 equal-weight). However, in the liquid U50 universe, returns turned negative.
-
-\textbf{Interpretation:} The model had learned to identify stocks that would perform well---but only among the lowest-liquidity names. The strategy could not be scaled because the alpha existed only where capacity was severely constrained.
+Initial belief: Full universe profitable (U100 net +6.8\%).
+Finding: +48.1\% of holdings in Q1. Within-Q1: +2.7\% monthly excess.
+Interpretation: The alpha existed where capacity was severely constrained.
